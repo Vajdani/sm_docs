@@ -524,7 +524,7 @@ function Shape:getIsStackable() end
 ---Will only get the joints which are subshapes to the shape when onlySubshapes is set to true.  
 ---@param onlyChildJoints? boolean Filters what joints to return. Defaults to true (Optional)
 ---@param onlySubshapes? boolean Only get the joints which are subshapes to the shape. Defaults to false (Optional)
----@return table
+---@return Joint[]
 function Shape:getJoints(onlyChildJoints, onlySubshapes) end
 
 ---Returns the local grid postition of a shape.  
@@ -787,7 +787,7 @@ function Body:getCenterOfMassPosition() end
 
 ---Returns a table of all bodies in a creation.  
 ---A creation includes all bodies connected by [Joint, joints], etc.  
----@return table
+---@return Body[]
 function Body:getCreationBodies() end
 
 ---*Server only*  
@@ -797,12 +797,12 @@ function Body:getCreationId() end
 
 ---Returns a table of all [Joint, joints] that are part of a creation.  
 ---A creation includes all bodies connected by [Joint, joints], etc.  
----@return table
+---@return Joint[]
 function Body:getCreationJoints() end
 
 ---Returns a table of all [Shape, shapes] that are part of a creation.  
 ---A creation includes all bodies connected by [Joint, joints], etc.  
----@return table
+---@return Shape[]
 function Body:getCreationShapes() end
 
 ---Returns the id of a body.  
@@ -816,7 +816,7 @@ function Body:getInteractables() end
 
 ---Returns a table of all [Joint, joints] that are part of a body.  
 ---This will <strong>not</strong> return joints in neighbouring bodies.  
----@return table
+---@return Joint[]
 function Body:getJoints() end
 
 ---Get the local aabb of the body.  
@@ -1068,7 +1068,7 @@ function Interactable:getGlowMultiplier() end
 function Interactable:getId() end
 
 ---Returns a table of all [Joint, joints] that an interactable is connected to. Joints include <strong>bearings</strong> and <strong>pistons</strong>.  
----@return table
+---@return Joint[]
 function Interactable:getJoints() end
 
 ---Return the position of the bone  
