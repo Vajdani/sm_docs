@@ -449,7 +449,7 @@ function Shape:destroyBlock(position, size, attackLevel) end
 
 ---*Server only*  
 ---Destroy a part  
----@param attackLevel integer Determines which quality level of parts the attack can destroy. Setting it to 0 (default) will destroy any part.
+---@param attackLevel? integer Determines which quality level of parts the attack can destroy. Setting it to 0 (default) will destroy any part.
 function Shape:destroyPart(attackLevel) end
 
 ---*Server only*  
