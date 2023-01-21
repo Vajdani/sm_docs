@@ -5864,38 +5864,13 @@ sm.effect = {}
 
 ---*Client only*  
 ---Creates an effect.  
----@param name string The name.
----@return Effect
-function sm.effect.createEffect(name) end
-
----*Client only*  
----Creates an effect.  
----If you provide a host interactable to the effect then it will fetch position, velocity and orientation data from the interactable instead of relying on this information being fed to it.  
+---If you provide a host object to the effect then it will fetch position, velocity and orientation data from the interactable instead of relying on this information being fed to it.  
 ---This results in far more accurate positioning of effects that are supposed to stay attached to an object.  
 ---@param name string The name.
----@param interactable Interactable The interactable the effect is attached to.
+---@param object? Interactable|Character|Harvestable The object the effect is attached to.
 ---@param name? string The bone name. (Defaults to not attached to a bone) (Optional)
 ---@return Effect
-function sm.effect.createEffect(name, interactable, name) end
-
----*Client only*  
----Creates an effect.  
----If you provide a host harvestable to the effect then it will fetch position, velocity and orientation data from the harvestable instead of relying on this information being fed to it.  
----This results in far more accurate positioning of effects that are supposed to stay attached to an object.  
----@param name string The name.
----@param harvestable Harvestable The harvestable the effect is attached to.
----@return Effect
-function sm.effect.createEffect(name, harvestable) end
-
----*Client only*  
----Creates an effect.  
----If you provide a host character to the effect then it will fetch position, velocity and orientation data from the character instead of relying on this information being fed to it.  
----This results in far more accurate positioning of effects that are supposed to stay attached to an object.  
----@param name string The name.
----@param character Character The character the effect is attached to.
----@param name? string The bone name. (Defaults to not attached to a bone) (Optional)
----@return Effect
-function sm.effect.createEffect(name, character, name) end
+function sm.effect.createEffect(name, object, name) end
 
 ---*Client only*  
 ---Creates an 2d effect.  
