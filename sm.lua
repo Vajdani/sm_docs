@@ -4563,7 +4563,18 @@ sm.interactable.actions = {
 ---water1024  
 ---ammo2048  
 ---@type table
-sm.interactable.connectionType = {}
+sm.interactable.connectionType = {
+    none = 0,
+    logic = 1,
+    power = 2,
+    bearing = 4,
+    seated = 8,
+    piston = 16,
+    gasoline = 256,
+    electricity = 512,
+    water = 1024,
+    ammo = 2048
+}
 
 ---Flags to be used with the steering component.  
 ---@type table
