@@ -454,8 +454,7 @@ function Shape:destroyPart(attackLevel) end
 
 ---*Server only*  
 ---Destroy a shape  
----@param attackLevel integer Determines which quality level of shape the attack can destroy. Setting it to 0 (default) will destroy any shape.
----@overload fun(attackLevel: integer)
+---@param attackLevel? integer Determines which quality level of shape the attack can destroy. Setting it to 0 (default) will destroy any shape.
 function Shape:destroyShape(attackLevel) end
 
 ---Returns the direction of a shape's front side.  
@@ -549,12 +548,12 @@ function Shape:getMaterialId() end
 
 ---*Server only*  
 ---Returns a table of shapes which are neighbours to the shape  
----@return table
+---@return Shape[]
 function Shape:getNeighbours() end
 
 ---*Server only*  
 ---Returns a table of shapes which are neighbours connected with pipes to the shape  
----@return table
+---@return Shape[]
 function Shape:getPipedNeighbours() end
 
 ---Returns the direction of a shape's right side.  
@@ -568,7 +567,7 @@ function Shape:getShapeUuid() end
 
 ---Returns the sticky directions of the shape for positive xyz and negative xyz.  
 ---A value of 1 means that the direction is sticky and a value of 0 means that the direction is not sticky.  
----@return table
+---@return Vec3, Vec3
 function Shape:getSticky() end
 
 ---Returns the direction of a shape's top side.  
@@ -617,7 +616,7 @@ function Shape:shapeExists() end
 
 ---Returns a table of all shapes colliding with a given sphere.  
 ---@param radius number The radius of the sphere.
----@return table
+---@return Shape[]
 function Shape:shapesInSphere(radius) end
 
 ---Transform a world direction to the local shape transform.  
@@ -774,7 +773,7 @@ function Body:createPart(uuid, position, z_axis, x_axis, forceAccept) end
 
 ---*Server only*  
 ---Returns a table with all characters seated in this body  
----@return table
+---@return Character[]
 function Body:getAllSeatedCharacter() end
 
 ---Returns the angular velocity of a body.  
@@ -811,7 +810,7 @@ function Body:getId() end
 
 ---Returns a table of all [Interactable, interactables] that are part of a body.  
 ---This will <strong>not</strong> return interactables in neighbouring bodies connected by [Joint, joints], etc.  
----@return table
+---@return Interactable[]
 function Body:getInteractables() end
 
 ---Returns a table of all [Joint, joints] that are part of a body.  
@@ -829,7 +828,7 @@ function Body:getMass() end
 
 ---Returns a table of all [Shape, shapes] that are part of a body.  
 ---This will <strong>not</strong> return shapes in neighbouring bodies connected by [Joint, joints], etc.  
----@return table
+---@return Shape[]
 function Body:getShapes() end
 
 ---Returns the linear velocity of a body.  
@@ -1024,7 +1023,7 @@ function Interactable:disconnect(child) end
 function Interactable:getAnimDuration(name) end
 
 ---Returns a table of [Joint, bearings] that an interactable is connected to.  
----@return table
+---@return Joint[]
 function Interactable:getBearings() end
 
 ---Returns the [Body] an interactable's [Shape] is part of.  
@@ -1034,7 +1033,7 @@ function Interactable:getBody() end
 ---Returns a table of child [Interactable, interactables] that an interactable is connected to. The children listen to the interactable's output.  
 ---@param flags integer Connection type flags filter. (defaults to all types except for sm.interactable.connectionType.bearing (for backwards compability))
 ---@overload fun(flags: integer): table
----@return table
+---@return Interactable[]
 function Interactable:getChildren(flags) end
 
 ---Returns the connection-point highlight color of an interactable. The point is shown when using the <em>Connect Tool</em>.  
@@ -1087,11 +1086,11 @@ function Interactable:getMaxParentCount() end
 ---Returns a table of parent [Interactable, interactables] that are connected to an interactable. The parents act as the interactable's input.  
 ---@param flags integer Connection type flags filter. (default to all types)
 ---@overload fun(flags: integer): table
----@return table
+---@return Interactable[]
 function Interactable:getParents(flags) end
 
 ---Returns a table of [Joint, pistons] that an interactable is connected to.  
----@return table
+---@return Joint[]
 function Interactable:getPistons() end
 
 ---*Client only*  
@@ -1114,7 +1113,7 @@ function Interactable:getPublicData() end
 function Interactable:getSeatCharacter() end
 
 ---Retrieves the list of [Interactable] connected to the seat.  
----@return table
+---@return Interactable[]
 function Interactable:getSeatInteractables() end
 
 ---Returns the [Shape] of an interactable.  
@@ -1616,6 +1615,12 @@ function Network:sendToServer(callbackMethod, args) end
 function Network:setClientData(data, channel) end
 
 
+---@class Item
+---@field uuid Uuid The UUID of the item.
+---@field instance number The instance ID, if the item is a tool.
+---@field quantity number The item amount.
+
+
 ---@class Container
 ---A userdata object representing a <strong>container</strong> in the game.  
 local Container = {}
@@ -1672,7 +1677,7 @@ function Container:getAllowSpend() end
 
 ---Returns a table containing item uuid, quantity (and instance id for tools) at given slot.  
 ---@param slot integer The slot.
----@return table
+---@return Item
 function Container:getItem(slot) end
 
 ---Returns the max stack size in the container.  
@@ -1716,6 +1721,12 @@ function Container:setFilters(filter) end
 ---@param instance? integer The instance id, if the item is a tool. (Optional)
 ---@return boolean
 function Container:setItem(slot, itemUuid, quantity, instance) end
+
+
+---@class AnimationInfo
+---@field looping boolean
+---@field name string
+---@field duration number
 
 
 ---@class Character
@@ -1795,13 +1806,17 @@ function Character:applyTumblingImpulse(impulse) end
 ---@param callback string The name of the Lua function to bind.
 function Character:bindAnimationCallback(animationName, triggerTime, callback) end
 
+---@class ActiveAnimationInfo
+---@field name string
+---@field weight number
+
 ---Returns the set of active animations.  
----@return table
+---@return ActiveAnimationInfo[]
 function Character:getActiveAnimations() end
 
 ---*Client only*  
 ---@param name string The name.
----@return table
+---@return AnimationInfo
 function Character:getAnimationInfo(name) end
 
 ---Returns whether the character will float or sink in liquid.  
@@ -2244,7 +2259,7 @@ function AreaTrigger:getHostInteractable() end
 function AreaTrigger:getId() end
 
 ---Gets the shapes inside the area trigger  
----@return table
+---@return Shape[]
 function AreaTrigger:getShapes() end
 
 ---Returns the size of an area trigger.  
@@ -3188,7 +3203,7 @@ Tool.id = {}
 ---*Client only*  
 ---Returns general information for a third person view animation.  
 ---@param name string The name.
----@return table
+---@return AnimationInfo
 function Tool:getAnimationInfo(name) end
 
 ---*Client only*  
@@ -3210,7 +3225,7 @@ function Tool:getSmoothDirection() end
 ---*Client only*  
 ---Returns general information for a first person view animation.  
 ---@param name string The name.
----@return table
+---@return AnimationInfo
 function Tool:getFpAnimationInfo(name) end
 
 ---*Client only*  
@@ -3760,8 +3775,8 @@ function GuiInterface:setSliderCallback(sliderName, callback) end
 ---*Client only*  
 ---Sets the position and range of a slider  
 ---@param sliderName string The name of the slider
----@param range unsigned The slider range
----@param position unsigned The slider position
+---@param range number The slider range
+---@param position number The slider position
 function GuiInterface:setSliderData(sliderName, range, position) end
 
 ---*Client only*  
@@ -4397,7 +4412,7 @@ function sm.physics.getSphereContacts(pos, radius) end
 ---Performs multiple sphere and/or raycasts given a table of parameters.  
 ---Type can be "sphere" or "ray". Radius is ignored for rays.  
 ---@param casts table Table of casts. { type=string, startPoint=[Vec3], endPoint=[Vec3], radius=number, mask=[sm.physics.filter] }
----@return table
+---@return RaycastResult[]
 function sm.physics.multicast(casts) end
 
 ---Performs a <a target="_blank" href="https://en.wikipedia.org/wiki/Ray_casting">ray cast</a> between two positions.  
@@ -4506,7 +4521,7 @@ function sm.body.createBody(position, rotation, isDynamic) end
 
 ---*Server only*  
 ---Returns a table with all the bodies in the world.  
----@return table
+---@return Body[]
 function sm.body.getAllBodies() end
 
 ---Returns a table of tables, which is an array of tables containing bodies grouped by creation.  
@@ -4972,8 +4987,8 @@ sm.cell = {}
 ---3: Large - large trees, visible at a very long distance.  
 ---@param x integer The X-coordinate.
 ---@param y integer The Y-coordinate.
----@param size integer Size of harvestable (defaults to any size).
----@return table
+---@param size? integer Size of harvestable (defaults to any size).
+---@return Harvestable[]
 function sm.cell.getHarvestables(x, y, size) end
 
 ---*Server only*  
@@ -4983,7 +4998,7 @@ function sm.cell.getHarvestables(x, y, size) end
 ---@param x integer The X-coordinate.
 ---@param y integer The Y-coordinate.
 ---@param uuids table A table {[Uuid], ...} of uuids to match interactables against.
----@return table
+---@return Interactable[]
 function sm.cell.getInteractablesByAnyUuid(x, y, uuids) end
 
 ---*Server only*  
@@ -4993,7 +5008,7 @@ function sm.cell.getInteractablesByAnyUuid(x, y, uuids) end
 ---@param x integer The X-coordinate.
 ---@param y integer The Y-coordinate.
 ---@param tags table A table {string, ...} of tags to match with.
----@return table
+---@return Interactable[]
 function sm.cell.getInteractablesByTag(x, y, tags) end
 
 ---*Server only*  
@@ -5003,7 +5018,7 @@ function sm.cell.getInteractablesByTag(x, y, tags) end
 ---@param x integer The X-coordinate
 ---@param y integer The Y-coordinate
 ---@param tags table A table {string, ...} of tags to match with.
----@return table
+---@return Interactable[]
 function sm.cell.getInteractablesByTags(x, y, tags) end
 
 ---*Server only*  
@@ -5013,27 +5028,37 @@ function sm.cell.getInteractablesByTags(x, y, tags) end
 ---@param x integer The X-coordinate.
 ---@param y integer The Y-coordinate.
 ---@param uuid Uuid The uuid of the interactable(s)
----@return table
+---@return Interactable[]
 function sm.cell.getInteractablesByUuid(x, y, uuid) end
+
+---@class NodeParams
+---@field name string
+
+---@class Node
+---@field scale Vec3
+---@field tags string[]
+---@field position Vec3
+---@field params NodeParams
+---@field rotation Quat
 
 ---Returns a table of nodes which contains the given tag for a cell coordinate.  
 ---@param x integer X-coordinate.
 ---@param y integer Y-coordinate.
 ---@param tag string Tag to match with.
----@return table
+---@return Node[]
 function sm.cell.getNodesByTag(x, y, tag) end
 
 ---Returns a table of nodes which contain all of the given tags for a cell coordinate.  
 ---@param x integer X-coordinate.
 ---@param y integer Y-coordinate.
 ---@param tags table A table {string, ...} of tags to match with.
----@return table
+---@return Node[]
 function sm.cell.getNodesByTags(x, y, tags) end
 
 ---Returns a table of tags for a cell coordinate.  
 ---@param x integer X-coordinate
 ---@param y integer Y-coordinate
----@return table
+---@return string[]
 function sm.cell.getTags(x, y) end
 
 
@@ -5076,12 +5101,12 @@ function sm.container.endTransaction() end
 
 ---Returns a table containing item uuid, quantity (and instance id for tools) at first available slot  
 ---@param container Container The container.
----@return table
+---@return Item
 function sm.container.getFirstItem(container) end
 
 ---Returns a table containing all item uuids in a container.  
 ---@param container Container The container.
----@return table
+---@return Uuid[]
 function sm.container.itemUuid(container) end
 
 ---*Server only*  
@@ -5100,7 +5125,7 @@ function sm.container.moveAllToCarryContainer(container, player, color) end
 
 ---Returns a table containing all item quantities in a container.  
 ---@param container Container The container.
----@return table
+---@return number[]
 function sm.container.quantity(container) end
 
 ---*Server only*  
@@ -5236,7 +5261,7 @@ function sm.character.preloadRenderables(renderables) end
 sm.player = {}
 
 ---Returns a table of all [Player, players] that are currently in the game.  
----@return table
+---@return Player[]
 function sm.player.getAllPlayers() end
 
 
@@ -5576,33 +5601,53 @@ function sm.event.sendToWorld(world, callback, args) end
 ---Allows checking for static infortmation about items.  
 sm.item = {}
 
+---@class CharacterShape
+---@field placementSphereRadius number
+---@field characterUuid string UUID string of the character
+
 ---Return the data for the character [Shape].  
 ---@param uuid Uuid The shape uuid.
----@return table
+---@return CharacterShape
 function sm.item.getCharacterShape(uuid) end
+
+
+---@class Edible
+---@field hpGain number
+---@field foodGain number
+---@field waterGain number
 
 ---Return the data for the edible [Shape].  
 ---@param uuid Uuid The shape uuid.
----@return table
+---@return Edible
 function sm.item.getEdible(uuid) end
+
+
+---@class FeatureData
+---@field filename string
+---@field classname string
+---@field data table
 
 ---Returns the shapes feature data.  
 ---@param uuid Uuid The item uuid.
----@return table
+---@return FeatureData
 function sm.item.getFeatureData(uuid) end
 
 ---Returns a table of all [Interactable, interactable] [Uuid, uuids] of a interactable type  
 ---@param interactableType string The interactable type name
----@return table
+---@return Uuid[]
 function sm.item.getInteractablesUuidsOfType(interactableType) end
+
+
+---@class Plantable
+---@field harvestable string UUID string of the planted harvestable
 
 ---Return the data for the plantable [Shape].  
 ---@param uuid Uuid The shape uuid.
----@return table
+---@return Plantable
 function sm.item.getPlantable(uuid) end
 
 ---Returns a table of all plantable [Uuid, uuids].  
----@return table
+---@return Uuid[]
 function sm.item.getPlantableUuids() end
 
 ---Return the quality level for the [Shape].  
@@ -5912,30 +5957,10 @@ function sm.effect.playEffect(name, position, velocity, rotation, scale, paramet
 ---**Note:**
 ---*If you start a looping effect using this function you will not be able to stop it.<br>Please use [sm.effect.createEffect, createEffect] for looping effects*
 ---@param name string The effect name.
----@param interactable Interactable The interactable the effect is attached to.
+---@param object Interactable|Character|Harvestable The object the effect is attached to.
 ---@param boneName? string The bone name. (Optional)
 ---@param parameters? table The table containing the parameters for the effect. (Optional)
-function sm.effect.playHostedEffect(name, interactable, boneName, parameters) end
-
----*Client only*  
----Plays an effect. It will fetch position, velocity and orientation data from the host harvestable.  
----**Note:**
----*If you start a looping effect using this function you will not be able to stop it.<br>Please use [sm.effect.createEffect, createEffect] for looping effects*
----@param name string The effect name.
----@param harvestable Harvestable The harvestable the effect is attached to.
----@param parameters? table The table containing the parameters for the effect. (Optional)
-function sm.effect.playHostedEffect(name, harvestable, parameters) end
-
----*Client only*  
----Plays an effect. It will fetch position, velocity and orientation data from the host character.  
----**Note:**
----*If you start a looping effect using this function you will not be able to stop it.<br>Please use [sm.effect.createEffect, createEffect] for looping effects*
----@param name string The effect name.
----@param character Character The charcater the effect is attached to.
----@param boneName? string The bone name. (Optional)
----@param parameters? table The table containing the parameters for the effect. (Optional)
-function sm.effect.playHostedEffect(name, character, boneName, parameters) end
-
+function sm.effect.playHostedEffect(name, object, boneName, parameters) end
 
 ---<strong>Debris</strong> are visual objects that have no impact on any other object.  
 sm.debris = {}
@@ -6066,7 +6091,7 @@ function sm.pathfinder.getPath(character, destination, groundPos, linkConditions
 ---@param worldPosition Vec3 The position to look in
 ---@param minDist number Minimum distance around pos
 ---@param maxDist number Maximum distance around pos
----@return table
+---@return PathNode[]
 function sm.pathfinder.getSortedNodes(worldPosition, minDist, maxDist) end
 
 
@@ -6193,7 +6218,7 @@ function sm.localPlayer.getDirection() end
 ---*Client only*  
 ---Returns general information for a first person view animation.  
 ---@param name string The name.
----@return table
+---@return AnimationInfo
 function sm.localPlayer.getFpAnimationInfo(name) end
 
 ---*Client only*  
@@ -6736,9 +6761,16 @@ function sm.visualization.createBlueprint(blueprintTable) end
 ---@return BlueprintVisualization
 function sm.visualization.createBuilderGuide(path, shape, ignoreBlockUuid, completeEffectName) end
 
+
+---@class ShapePlacementVisualization
+---@field isLegalPlacement boolean
+---@field shapeUuid Uuid
+---@field worldRotation Quat
+---@field worldPosition Vec3
+
 ---*Client only*  
 ---Returns a table containing the current state of the shape placement visualization.  
----@return table
+---@return ShapePlacementVisualization
 function sm.visualization.getShapePlacementVisualization() end
 
 ---*Client only*  
