@@ -6345,7 +6345,14 @@ sm.camera = {}
 ---cutsceneFP2  
 ---cutsceneTP3  
 ---@type table
-sm.camera.state = {}
+sm.camera.state = {   
+    default = 1,
+    cutsceneFP = 2,
+    cutsceneTP = 3,
+    forcedTP = 4,
+    gyroSeatFP = 5,
+    gyroSeatTP = 6
+}
 
 ---*Client only*  
 ---Performs a distance convex sweep with the shape of a sphere, from a position with a given direction.  
