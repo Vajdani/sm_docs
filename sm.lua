@@ -1033,7 +1033,7 @@ function Interactable:getBody() end
 ---Returns a table of child [Interactable, interactables] that an interactable is connected to. The children listen to the interactable's output.  
 ---@param flags integer Connection type flags filter. (defaults to all types except for sm.interactable.connectionType.bearing (for backwards compability))
 ---@overload fun(flags: integer): table
----@return Interactable[]
+---@return Interactable[]|Joint[]
 function Interactable:getChildren(flags) end
 
 ---Returns the connection-point highlight color of an interactable. The point is shown when using the <em>Connect Tool</em>.  
@@ -1084,8 +1084,7 @@ function Interactable:getMaxChildCount() end
 function Interactable:getMaxParentCount() end
 
 ---Returns a table of parent [Interactable, interactables] that are connected to an interactable. The parents act as the interactable's input.  
----@param flags integer Connection type flags filter. (default to all types)
----@overload fun(flags: integer): table
+---@param flags? integer Connection type flags filter. (default to all types)
 ---@return Interactable[]
 function Interactable:getParents(flags) end
 
@@ -3674,7 +3673,7 @@ function GuiInterface:setGridButtonCallback(buttonName, callback) end
 ---Sets an item in a grid  
 ---@param gridName string The name of the grid
 ---@param index integer The item index
----@param item table The item
+---@param item? table The item
 function GuiInterface:setGridItem(gridName, index, item) end
 
 ---*Client only*  
