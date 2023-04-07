@@ -5626,7 +5626,7 @@ function sm.item.getEdible(uuid) end
 ---@field classname string
 ---@field data table
 
----Returns the shapes feature data.  
+---Returns the data in the scripted section of the object's json declaration.  
 ---@param uuid Uuid The item uuid.
 ---@return FeatureData
 function sm.item.getFeatureData(uuid) end
