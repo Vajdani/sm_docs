@@ -3695,16 +3695,10 @@ function GuiInterface:setGridMouseFocusCallback(buttonName, callback) end
 function GuiInterface:setGridSize(gridName, index) end
 
 ---*Client only*  
----Sets a [Character] as host for a world gui  
----@param character Character The character to host the gui
+---Sets a [Character|Shape] as host for a world gui  
+---@param object Character|Shape The object to host the gui
 ---@param joint? string The joint (Optional)
-function GuiInterface:setHost(character, joint) end
-
----*Client only*  
----Sets a [Shape] as host for a world gui  
----@param shape Shape The shape to host the gui
----@param joint? string The joint (Optional)
-function GuiInterface:setHost(shape, joint) end
+function GuiInterface:setHost(object, joint) end
 
 ---*Client only*  
 ---Sets the icon image to a shape from an uuid  
