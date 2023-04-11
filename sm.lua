@@ -2066,7 +2066,7 @@ function Character:setUpDirection(up) end
 ---*Server only*  
 ---Sets the world position of a character.  
 ---@param WorldPosition Vec3 The character's new world position.
-function Character:setWorldPosition(The) end
+function Character:setWorldPosition(WorldPosition) end
 
 ---*Client only*  
 ---Updates a character animation.  
