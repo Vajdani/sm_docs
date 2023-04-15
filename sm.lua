@@ -6928,7 +6928,7 @@ sm.terrainTile = {}
 function sm.terrainTile.getAssetsForCell(tileId, tileOffsetX, tileOffsetY, sizeLevel) end
 
 ---Returns the clutter index at position (X,Y) in a tile.  
----@param tileId integer The tile id.
+---@param tileId Uuid The tile id.
 ---@param tileOffsetX integer The tile offset X.
 ---@param tileOffsetY integer The tile offset Y.
 ---@param x integer The X.
@@ -6937,7 +6937,7 @@ function sm.terrainTile.getAssetsForCell(tileId, tileOffsetX, tileOffsetY, sizeL
 function sm.terrainTile.getClutterIdxAt(tileId, tileOffsetX, tileOffsetY, x, y) end
 
 ---Returns the terrain color at position (X,Y) in a tile.  
----@param tileId integer The tile id.
+---@param tileId Uuid The tile id.
 ---@param tileOffsetX integer The tile offset X.
 ---@param tileOffsetY integer The tile offset Y.
 ---@param lod integer The level of detail.
@@ -6980,7 +6980,7 @@ function sm.terrainTile.getDecalsForCell(id, x_offset, y_offset) end
 function sm.terrainTile.getHarvestablesForCell(tileId, tileOffsetX, tileOffsetY, sizeLevel) end
 
 ---Returns the terrain height at position (X,Y) in a tile.  
----@param tileId integer The tile id.
+---@param tileId Uuid The tile id.
 ---@param tileOffsetX integer The tile offset X.
 ---@param tileOffsetY integer The tile offset Y.
 ---@param lod integer The level of detail.
@@ -6998,7 +6998,7 @@ function sm.terrainTile.getHeightAt(tileId, tileOffsetX, tileOffsetY, lod, x, y)
 function sm.terrainTile.getKinematicsForCell(tileId, tileOffsetX, tileOffsetY, sizeLevel) end
 
 ---Returns the terrain material at position (X,Y) in a tile.  
----@param tileId integer The tile id.
+---@param tileId Uuid The tile id.
 ---@param tileOffsetX integer The tile offset X.
 ---@param tileOffsetY integer The tile offset Y.
 ---@param lod integer The level of detail.
