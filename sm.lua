@@ -1031,8 +1031,7 @@ function Interactable:getBearings() end
 function Interactable:getBody() end
 
 ---Returns a table of child [Interactable, interactables] that an interactable is connected to. The children listen to the interactable's output.  
----@param flags integer Connection type flags filter. (defaults to all types except for sm.interactable.connectionType.bearing (for backwards compability))
----@overload fun(flags: integer): table
+---@param flags? integer Connection type flags filter. (defaults to all types except for sm.interactable.connectionType.bearing (for backwards compability))
 ---@return Interactable[]|Joint[]
 function Interactable:getChildren(flags) end
 
@@ -5619,6 +5618,7 @@ function sm.item.getEdible(uuid) end
 ---@field filename string
 ---@field classname string
 ---@field data table
+---@field tag string
 
 ---Returns the data in the scripted section of the object's json declaration.  
 ---@param uuid Uuid The item uuid.
