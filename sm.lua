@@ -1754,6 +1754,11 @@ Character.color = {}
 Character.direction = {}
 
 ---**Get**:
+---Returns the smoothed direction of where a character is viewing or aiming.  
+---@type Vec3
+Character.smoothDirection = {}
+
+---**Get**:
 ---Returns the id of a character.  
 ---@type integer
 Character.id = {}
