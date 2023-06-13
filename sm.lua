@@ -3542,6 +3542,11 @@ function GuiInterface:addGridItem(gridName, item) end
 ---@param additionalData table Additional data to the json (Optional)
 function GuiInterface:addGridItemsFromFile(gridName, jsonPath, additionalData) end
 
+---*Client only*
+---@param uuid Uuid The uuid of the item
+---@param difference integer Amount of items
+function GuiInterface:addToPickupDisplay( uuid, difference ) end
+
 ---*Client only*  
 ---Appends an item to a list  
 ---@param listName string The name of the list
@@ -4531,8 +4536,32 @@ function sm.body.getCreationsFromBodies(bodies) end
 ---An <strong>interactable shape</strong> is any part that has additional functionality or abilities. The player can interact with an interactable shape by pressing `E` on it, or connect it to other interactables with the <em>Connect Tool</em>.  
 sm.interactable = {}
 
+---@class InteractableActions
+---@field none integer
+---@field left integer
+---@field right integer
+---@field forward  integer
+---@field backward integer
+---@field item0 integer
+---@field item1 integer
+---@field item2 integer
+---@field item3 integer
+---@field item4 integer
+---@field item5 integer
+---@field item6 integer
+---@field item8 integer
+---@field item7 integer
+---@field item9 integer
+---@field use integer
+---@field jump integer
+---@field exit integer
+---@field attack integer
+---@field create integer
+---@field zoomIn integer
+---@field zoomOut integer
+
 ---Actions are used to specify what inputs types an [Interactable] is able to detect.  
----@type table
+---@type InteractableActions
 sm.interactable.actions = {
     none = 0,
     left = 1,
@@ -5166,8 +5195,9 @@ sm.ai = {}
 ---Check if the unit can reach the target position by moving straight.  
 ---@param unit Unit The unit.
 ---@param position Vec3 The target position.
+---@param maxDistance? number The max distance.
 ---@return boolean
-function sm.ai.directPathAvailable(unit, position) end
+function sm.ai.directPathAvailable(unit, position, maxDistance) end
 
 ---Returns true if the character can fire at the target harvestable within a given fire lane.  
 ---Also returns the aim position that allows the character to succeed.  
@@ -8424,5 +8454,3 @@ function ToolClass:client_onReload() end
 ---This event is called to check whether the [Tool] can be equipped.  
 ---@return boolean
 function ToolClass:client_canEquip() end
-
-
