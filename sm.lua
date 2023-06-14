@@ -4309,7 +4309,6 @@ sm.physics = {}
 ---static  
 ---default  
 ---all  
----@type table
 sm.physics.filter = {
     all = -1,
     dynamicBody = 1,
@@ -4335,8 +4334,22 @@ sm.physics.filter = {
 ---"joint"A [Joint].  
 ---"harvestable"A [Harvestable].  
 ---"vision"A collision area used by sensors.  
----@type table
-sm.physics.types = {}
+sm.physics.types = {
+    "limiter",
+    "terrainSurface",
+    "terrainAsset",
+    "body",
+    "joint",
+    "lift",
+    "character",
+    "joint",
+    "harvestable",
+    "ragdoll",
+    "areaTrigger",
+    "vision",
+    "voxelTerrain",
+    "tunnelCatcher"
+}
 
 ---Applies an impulse to a [Shape], changing its velocity immediately. The impulse is applied to the shape's centerpoint with an optional offset.  
 ---@param target Shape The object on which the impulse is exerted on.
@@ -4536,32 +4549,7 @@ function sm.body.getCreationsFromBodies(bodies) end
 ---An <strong>interactable shape</strong> is any part that has additional functionality or abilities. The player can interact with an interactable shape by pressing `E` on it, or connect it to other interactables with the <em>Connect Tool</em>.  
 sm.interactable = {}
 
----@class InteractableActions
----@field none integer
----@field left integer
----@field right integer
----@field forward  integer
----@field backward integer
----@field item0 integer
----@field item1 integer
----@field item2 integer
----@field item3 integer
----@field item4 integer
----@field item5 integer
----@field item6 integer
----@field item8 integer
----@field item7 integer
----@field item9 integer
----@field use integer
----@field jump integer
----@field exit integer
----@field attack integer
----@field create integer
----@field zoomIn integer
----@field zoomOut integer
-
 ---Actions are used to specify what inputs types an [Interactable] is able to detect.  
----@type InteractableActions
 sm.interactable.actions = {
     none = 0,
     left = 1,
@@ -4603,7 +4591,6 @@ sm.interactable.actions = {
 ---electricity512  
 ---water1024  
 ---ammo2048  
----@type table
 sm.interactable.connectionType = {
     none = 0,
     logic = 1,
@@ -4618,33 +4605,45 @@ sm.interactable.connectionType = {
 }
 
 ---Flags to be used with the steering component.  
----@type table
-sm.interactable.steering = {}
+sm.interactable.steering = {
+    left = 1,
+    right = 2,
+    forward = 4,
+    backward = 8
+}
 
----"electricEngine"  
----"gasEngine"  
----"steering"  
----"seat"  
----"controller"  
----"button"  
----"lever"  
----"sensor"  
----"thruster"  
----"radio"  
----"horn"  
----"tone"  
----"logic"  
----"timer"  
----"particlePreview"  
----"spring"  
----"pointLight"  
----"spotLight"  
----"chest"  
----"scripted"  
----"piston"  
----"simpleInteractive"  
----@type table
-sm.interactable.types = {}
+sm.interactable.types = {
+    "electricEngine",
+    "gasEngine",
+    "steering",
+    "seat",
+    "controller",
+    "button",
+    "lever",
+    "sensor",
+    "thruster",
+    "radio",
+    "horn",
+    "tone",
+    "logic",
+    "timer",
+    "particlePreview",
+    "spring",
+    "pointLight",
+    "spotLight",
+    "chest",
+    "itemStack",
+    "scripted",
+    "piston",
+    "simpleInteractive",
+    "camera",
+    "waypoint",
+    "survivalThruster",
+    "survivalPiston",
+    "survivalSpring",
+    "survivalSequence",
+    "survivalSensor"
+}
 
 
 ---A <strong>joint</strong> is a part that can be built by a player that is used to connect [Body, bodies]. There are multiple scriptable joint types:  
@@ -4654,8 +4653,7 @@ sm.joint = {}
 
 ---"bearing"A bearing part.  
 ---"piston"A piston part.  
----@type table
-sm.joint.types = {}
+sm.joint.types = {"bearing", "piston"}
 
 
 ---Information about projectiles are located in `/Data/Projectiles/projectiles.json`.  
@@ -5349,7 +5347,6 @@ sm.areaTrigger = {}
 ---lif  
 ---voxelTerrain
 ---all
----@type table
 sm.areaTrigger.filter = {
     dynamicBody = 1,
     staticBody = 2,
@@ -5525,7 +5522,10 @@ sm.world = {}
 ---Predefined special world ids  
 ---anyWorld  
 ---noWorld  
-sm.world.ids = {}
+sm.world.ids = {
+    anyWorld = 65535,
+    noWorld = 65534
+}
 
 ---*Server only*  
 ---Creates a new world object. Can only be called from inside the Game script environment.  
@@ -5856,8 +5856,12 @@ sm.construction = {}
 ---subdivideRatio_20.125  
 ---subdivisions4  
 ---shapeSpacing0.004	  
----@type table
-sm.construction.constants = {}
+sm.construction.constants = {
+    shapeSpacing = 0.004,
+    subdivideRatio = 0.25,
+    subdivideRatio_2 = 0.125,
+    subdivisions = 4
+}
 
 ---*Server only*  
 ---Builds a block on a shape.  
@@ -6103,7 +6107,11 @@ sm.pathfinder = {}
 ---height  
 ---target  
 ---none  
-sm.pathfinder.conditionProperty = {}
+sm.pathfinder.conditionProperty = {
+    height = 0,
+    target = 1,
+    none = 2
+}
 
 ---*Server only*  
 ---Find a path  
@@ -6148,8 +6156,12 @@ sm.tool = {}
 ---start1  
 ---hold2  
 ---stop3  
----@type table
-sm.tool.interactState = {}
+sm.tool.interactState = {
+    null = 0,
+    start = 1,
+    hold = 2,
+    stop = 3
+}
 
 ---Used to check collisions between the lift and the world.  
 ---@param creation table A table of all the bodies belonging to the creation placed on the lift.
@@ -6182,7 +6194,6 @@ sm.audio = {}
 
 ---@deprecated Audio is deprecated, use Effect instead
 ---A table with all the names of available sounds in the game.  
----@type table
 sm.audio.soundList = {}
 
 ---*Client only*  
@@ -6372,7 +6383,6 @@ sm.camera = {}
 ---default1  
 ---cutsceneFP2  
 ---cutsceneTP3  
----@type table
 sm.camera.state = {   
     default = 1,
     cutsceneFP = 2,
