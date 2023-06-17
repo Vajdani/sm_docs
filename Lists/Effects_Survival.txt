@@ -1,92 +1,122 @@
-'Bucket - Fill',
-'Bucket - Throw',
-'Elevator Button',
-'ElevatorWall',
-'ElevatorMusic',
-'ElevatorAmbiance',
-'Elevator - Opendoor',
-'Elevator - Closedoor',
-'Elevator - MoveOutside',
-'Elevator - Keycarduse',
-'WarehouseAmbiance',
-'UnderwaterAmbiance',
-'SurvivalMusic',
-'FarmerBall - Rolling',
-'FarmerBall - Help',
-'FarmerBall - Struggle',
-'Farmerhideout - Open',
-'Farmerhideout - Close',
-'Farmerhideout - Accept',
-'Glowstick - Throw',
-'Glowstick - Hold',
-'Tree - LeafRattle',
-'Tree - Ambient Birds',
-'Tree - Falling',
-'Tree - Creak',
-'Tree - LogAppear',
-'Tree - DefaultHit',
-'Tree - BurnedHit',
-'Tree - BirchHit',
-'beehive - beeswarm',
-'beehive - destruct',
-'Stone - Stress',
-'Cotton - Picked',
-'Cotton - Fluff',
-'Harvestable - Marker',
-'Harvestable - Burnttree',
-'Corn - Destruct',
-'Pigmentflower - Picked',
-'Oilgeyser - OilgeyserLoop',
-'Oilgeyser - OilgeyserAmbience',
-'Oilgeyser - Picked',
-'Oilgeyser - OilgeyserPickedLoop',
-'SlimyClam - Bubbles',
-'SlimyClam - BubblesAmbience',
-'SlimyClam - Destruct',
-'Haybot - Hit',
-'Haybot - Destroyed',
-'Haybot - Alerted',
-'Haybot - Attack01',
-'Haybot - Attack02',
-'Haybot - Attack03',
-'Haybot - SprintAttack',
-'Haybot - FotStep',
-'Haybot - ForkStep',
-'Haybot - IdleSpecial01',
-'Haybot - IdleSpecial02',
-'Haybot - Servo',
-'Haybot - Metal',
-'Haybot - CaseplayerVoice',
-'ShapeRenderable',
-'CustomizationRenderable',
-'TapeBot - Shoot',
-'TapeBot - Hit',
-'TapeBot - HeadShot',
-'TapeBot - Alerted',
-'TapeBot - Destroyed',
-'TapeBot - Scissor',
-'TapeBot - AlertedScissor',
-'TapeBot - ChasingScissor',
-'TapeBot - AlertedGunRattle',
-'TapeBot - ChasingGunRattle',
-'TapeBot - Servo',
-'TapeBot - AlertedServo',
-'TapeBot - ChasingServo',
-'TapeBot - FotStep',
-'TapeBot - AlertedFotStep',
-'TapeBot - ChasingFotStep',
-'RedTapeBot - ExplosivesHit',
-'ToteBot - Attack',
-'ToteBot - Alerted',
-'ToteBot - Hit',
-'ToteBot - DestroyedParts',
-'ToteBot - FotStep',
-'ToteBot - ChasePlayer',
-'ToteBot - Sparks',
-'ToteBot - SparkAttack',
-'Woc - Walk',
-'Woc - Run',
-'Woc - Eating',
-'Woc - Panic',
-'Woc - Moo',
+'Bucket - Fill'
+'Bucket - Throw'
+'Elevator Button'
+'ElevatorWall'
+'ElevatorMusic'
+'ElevatorAmbiance'
+'Elevator - Opendoor'
+'Elevator - Closedoor'
+'Elevator - MoveOutside'
+'Elevator - Keycarduse'
+'WarehouseAmbiance'
+'UnderwaterAmbiance'
+'SurvivalMusic'
+'Farmbot - Angry'
+'Farmbot - MoveHead'
+'Farmbot - MoveLegs'
+'Farmbot - RattleSyth'
+'Farmbot - Voice'
+'Farmbot - RoamingIdle'
+'Farmbot - Attack01'
+'Farmbot - Attack02'
+'Farmbot - Attack03'
+'Farmbot - Attack04'
+'Farmbot - Attack05'
+'Farmbot - Shoot'
+'Farmbot - Hit'
+'Farmbot - DestructionStartup01'
+'Farmbot - DestructionStartup02'
+'Farmbot - DestructionStartup03'
+'Farmbot - DestructionStartup04'
+'Farmbot - Destroyed'
+'Farmbot - RunBody'
+'Farmbot - SprintBody'
+'Farmbot - FotStepLight'
+'Farmbot - FotStepMedium'
+'Farmbot - FotStepHeavy'
+'FarmerBall - Rolling'
+'FarmerBall - Help'
+'FarmerBall - Struggle'
+'Farmerhideout - Open'
+'Farmerhideout - Close'
+'Farmerhideout - Accept'
+'Glowstick - Throw'
+'Glowstick - Hold'
+'Tree - LeafRattle'
+'Tree - Ambient Birds'
+'Tree - Falling'
+'Tree - Creak'
+'Tree - LogAppear'
+'Tree - DefaultHit'
+'Tree - BurnedHit'
+'Tree - BirchHit'
+'beehive - beeswarm'
+'beehive - destruct'
+'Stone - Stress'
+'Cotton - Picked'
+'Cotton - Fluff'
+'Harvestable - Marker'
+'Harvestable - Burnttree'
+'Corn - Destruct'
+'Pigmentflower - Picked'
+'Oilgeyser - OilgeyserLoop'
+'Oilgeyser - OilgeyserAmbience'
+'Oilgeyser - Picked'
+'Oilgeyser - OilgeyserPickedLoop'
+'SlimyClam - Bubbles'
+'SlimyClam - BubblesAmbience'
+'SlimyClam - Destruct'
+'Haybot - Hit'
+'Haybot - Destroyed'
+'Haybot - Alerted'
+'Haybot - Attack01'
+'Haybot - Attack02'
+'Haybot - Attack03'
+'Haybot - SprintAttack'
+'Haybot - FotStep'
+'Haybot - ForkStep'
+'Haybot - IdleSpecial01'
+'Haybot - IdleSpecial02'
+'Haybot - Servo'
+'Haybot - Metal'
+'Haybot - CaseplayerVoice'
+'Questmarker - Pointmarker'
+'Questmarker - Zonearea'
+'Questmarker - Pointmarker_small'
+'Questmarker - Pointmarker_large'
+'Guiquest - Newquest'
+'Guiquest - Questupdate'
+'Guiquest - Pausestarterquest'
+'ShapeRenderable'
+'CustomizationRenderable'
+'TapeBot - Shoot'
+'TapeBot - Hit'
+'TapeBot - HeadShot'
+'TapeBot - Alerted'
+'TapeBot - Destroyed'
+'TapeBot - Scissor'
+'TapeBot - AlertedScissor'
+'TapeBot - ChasingScissor'
+'TapeBot - AlertedGunRattle'
+'TapeBot - ChasingGunRattle'
+'TapeBot - Servo'
+'TapeBot - AlertedServo'
+'TapeBot - ChasingServo'
+'TapeBot - FotStep'
+'TapeBot - AlertedFotStep'
+'TapeBot - ChasingFotStep'
+'RedTapeBot - ExplosivesHit'
+'ToteBot - Attack'
+'ToteBot - Alerted'
+'ToteBot - Hit'
+'ToteBot - DestroyedParts'
+'ToteBot - FotStep'
+'ToteBot - ChasePlayer'
+'ToteBot - Sparks'
+'ToteBot - SparkAttack'
+'Woc - Walk'
+'Woc - Run'
+'Woc - Eating'
+'Woc - Panic'
+'Woc - Moo'
 'Woc - Destruct'
