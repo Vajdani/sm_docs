@@ -4468,7 +4468,7 @@ function sm.physics.sphereContactCount(worldPosition, radius, includeTerrain, co
 ---@param startPos Vec3 The start position.
 ---@param endPos Vec3 The end position.
 ---@param radius number The radius of the sphere.
----@param object? Body|Shape|Character The object to be ignored. (Optional)
+---@param object? Body|Character|Shape|Harvestable The object to be ignored. (Optional)
 ---@param mask? integer The collision mask. Defaults to [sm.physics.filter, sm.physics.filter.default] (Optional)
 ---@return boolean,	RaycastResult
 function sm.physics.spherecast(startPos, endPos, radius, object, mask) end
