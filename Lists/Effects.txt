@@ -1,6 +1,8 @@
 SURVIVAL:
     'Bucket - Fill'
     'Bucket - Throw'
+    'Cinematic - Survivalstart01'
+    'Cinematic - Survivalstart02'
     'Elevator Button'
     'ElevatorWall'
     'ElevatorMusic'
