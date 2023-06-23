@@ -2803,8 +2803,8 @@ function BuilderGuide:update() end
 ---A userdata object representing a <strong>cull sphere group</strong>.  
 local CullSphereGroup = {}
 
----**Get**:
----Returns the id of a sphere group.  
+---**Get**:  
+---Returns the id of the sphere group.
 ---@type int
 CullSphereGroup.id = {}
 
@@ -2814,20 +2814,21 @@ CullSphereGroup.id = {}
 ---@param radius number Sphere radius.
 function CullSphereGroup:addSphere(id, position, radius) end
 
----Queries the change in overlapping spheres since the last call to getDelta.  
----@param position Vec3 Position to query shpere.
----@param innerRadius number Radius for inner shpere.
----@param outerRadius number Radius for outer sphere.
----@return table, table
+---Returns the removed and added spheres since the last call to getDelta.  
+---@param position Vec3 Position of the query shpere.
+---@param innerRadius number Radius for inner query sphere.
+---@param outerRadius number Radius for outer query sphere.
+---@return table removed, table added
 function CullSphereGroup:getDelta(position, innerRadius, outerRadius) end
 
----Query for overlapping spheres.  
----@param position Vec3 Position to query sphere.
+---Returns all overlapping spheres.  
+---@param position Vec3 Position for query sphere.
 ---@param radius number Radius for query sphere.
+---@return table overlaps Ids of all overlapping spheres
 function CullSphereGroup:getOverlaps(position, radius) end
 
----Query all currently active spheres and leave them.  
----@return table
+---Removes all currently active spheres.  
+---@return table removed Ids of all previously active spheres
 function CullSphereGroup:leave() end
 
 ---Removes a sphere from the sphere group.  
@@ -5937,10 +5938,10 @@ sm.builderGuide = {}
 function sm.builderGuide.createBuilderGuide(path, shape, ignoreBlockUuid) end
 
 
----A <strong>cull sphere group</strong> is a collection of spheres that can be efficiently queried for.   
+---A [CullSphereGroup] is a collection of spheres, you can add or remove spheres and check for spheres within an inner and outer radius at a specified position.
 sm.cullSphereGroup = {}
 
----Creates a sphere group.  
+---Creates a new [CullSphereGroup].  
 ---@return CullSphereGroup
 function sm.cullSphereGroup.newCullSphereGroup() end
 
