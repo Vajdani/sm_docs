@@ -2808,7 +2808,7 @@ local CullSphereGroup = {}
 ---@type int
 CullSphereGroup.id = {}
 
----Adds a sphere to the sphere group, duplicate ids are ignored.  
+---Adds a sphere to the [CullSphereGroup], duplicate ids are ignored.  
 ---@param id int Sphere id.
 ---@param position Vec3 Sphere position.
 ---@param radius number Sphere radius.
@@ -2831,7 +2831,7 @@ function CullSphereGroup:getOverlaps(position, radius) end
 ---@return table removed Ids of all previously active spheres
 function CullSphereGroup:leave() end
 
----Removes a sphere from the sphere group.  
+---Removes a sphere from the [CullSphereGroup].  
 ---@param id int Sphere id.
 function CullSphereGroup:removeSphere(id) end
 
