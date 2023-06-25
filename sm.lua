@@ -4520,9 +4520,14 @@ function sm.shape.getShapeTitle(uuid) end
 function sm.shape.getShapeTypeColor(uuid) end
 
 ---Return whether the shape uuid exists  
----@param The Uuid shape uuid.
+---@param uuid Uuid The shape uuid.
 ---@return boolean
-function sm.shape.uuidExists(The) end
+function sm.shape.uuidExists(uuid) end
+
+---Return whether the shape uuid belongs to a harvest part  
+---@param uuid Uuid The shape uuid.
+---@return boolean
+function sm.shape.getIsHarvest(uuid) end
 
 
 ---A <strong>body</strong> is a collection of [Shape, shapes] that are built together. Bodies can be connected to other bodies using [Joint, joints] such as the bearing.  
