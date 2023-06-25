@@ -4524,6 +4524,10 @@ function sm.shape.getShapeTypeColor(uuid) end
 ---@return boolean
 function sm.shape.uuidExists(The) end
 
+---Return whether the [Shape] uuid belongs to a harvestable shape.  
+---@param uuid Uuid The shape uuid.
+---@return boolean
+function sm.item.getIsHarvest(uuid) end
 
 ---A <strong>body</strong> is a collection of [Shape, shapes] that are built together. Bodies can be connected to other bodies using [Joint, joints] such as the bearing.  
 sm.body = {}
