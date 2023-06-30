@@ -2644,6 +2644,7 @@ function Harvestable:setParams(data) end
 function Harvestable:setPoseWeight(index, value) end
 
 ---Set the world coordinates of a harvestable. Can only be used on kinematic harvestables.  
+---Can be used on both the client and the server, but using it on the server only affects the host.
 ---@param position Vec3 The position.
 function Harvestable:setPosition(position) end
 
@@ -2653,6 +2654,7 @@ function Harvestable:setPosition(position) end
 function Harvestable:setPublicData(data) end
 
 ---Set the quaternion rotation of a harvestable. Can only be used on kinematic harvestables.  
+---Can be used on both the client and the server, but using it on the server only affects the host.
 ---@param rotation Quat The rotation.
 function Harvestable:setRotation(rotation) end
 
