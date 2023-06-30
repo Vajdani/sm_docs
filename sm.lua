@@ -2847,7 +2847,14 @@ Effect.id = {}
 
 ---*Client only*  
 ---Bind an lua callback to be triggerd by the effect.  
----@param methodName string The name of the callback method being bound. Example: MyClass.methodName( self, event, params )
+---The callback receives:  
+--- - <strong>self</strong> (<em>table</em>) &ndash; The class instance.
+--- - <strong>eventName </strong> (<em>string</em>) &ndash; The name of the event.
+--- - <strong>params</strong> (<em>any</em>) &ndash; Parameter object passed to the callback.
+---```
+---function MyClass.onEffectEvent( self, eventName, params ) ...
+---```
+---@param callback string The name of the callback to bind.
 ---@param params? any Parameter object passed to the callback. (Optional)
 ---@param reference? table Table to recieve the callback. (Optional)
 function Effect:bindEventCallback(methodName, params, reference) end
