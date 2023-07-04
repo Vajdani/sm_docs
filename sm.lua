@@ -7,6 +7,7 @@
 ---@operator sub(Vec3): Vec3
 ---@operator mul(Vec3): Vec3
 ---@operator div(number): Vec3
+---@operator unm: Vec3
 ---A userdata object representing a 3D <strong>vector</strong>.  
 local Vec3 = {}
 
@@ -2261,8 +2262,14 @@ function AreaTrigger:getHostInteractable() end
 ---@return integer
 function AreaTrigger:getId() end
 
+---@class AreaTrigerShape
+---@field shape Shape
+---@field triggerWorldPosition Vec3
+---@field triggerLocalPosition Vec3
+---@field shapeWorldPosition Vec3
+---@field shapeLocalPosition Vec3
 ---Gets the shapes inside the area trigger  
----@return Shape[]
+---@return AreaTrigerShape[]
 function AreaTrigger:getShapes() end
 
 ---Returns the size of an area trigger.  
@@ -2805,7 +2812,7 @@ function BuilderGuide:update() end
 ---A userdata object representing a <strong>cull sphere group</strong>.  
 local CullSphereGroup = {}
 
----**Get**:  
+---**Get**:
 ---Returns the id of the sphere group.
 ---@type int
 CullSphereGroup.id = {}
@@ -4306,19 +4313,7 @@ function sm.color.new(hexInt) end
 ---Contains functions regarding the physics engine.  
 sm.physics = {}
 
----Collision filter types  
----dynamicBody  
----staticBody  
----character  
----areaTrigger  
----joints  
----terrainSurface  
----terrainAsset  
----harvestable  
----areaTrigger  
----static  
----default  
----all  
+---Collision filter types
 sm.physics.filter = {
     all = -1,
     dynamicBody = 1,
@@ -5611,7 +5606,7 @@ function sm.event.sendToInteractable(interactable, callback, args) end
 ---@return boolean
 function sm.event.sendToPlayer(player, callback, args) end
 
----Sends an event to a specified [ScriptableObject].  
+---Sends an event to a specified [ScriptableObject].
 ---@param scriptableObject ScriptableObject The scriptableObject.
 ---@param callback string The function name in a scriptableObject script.
 ---@param args? any Optional arguments to be sent to the callback.
