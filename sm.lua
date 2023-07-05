@@ -2262,14 +2262,15 @@ function AreaTrigger:getHostInteractable() end
 ---@return integer
 function AreaTrigger:getId() end
 
----@class AreaTrigerShape
+---@class AreaTriggerShape
 ---@field shape Shape
 ---@field triggerWorldPosition Vec3
 ---@field triggerLocalPosition Vec3
 ---@field shapeWorldPosition Vec3
 ---@field shapeLocalPosition Vec3
----Gets the shapes inside the area trigger  
----@return AreaTrigerShape[]
+
+---Gets the shapes inside the area trigger.
+---@return AreaTriggerShape[]
 function AreaTrigger:getShapes() end
 
 ---Returns the size of an area trigger.  
