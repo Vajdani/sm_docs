@@ -1601,7 +1601,7 @@ function Network:sendToServer(callbackMethod, args) end
 ---```
 ----- Example:
 ---function MyEngine.server_onCreate( self )
----	self.network:setClientData( { "gear" = 1 } )
+---	self.network:setClientData( { gear = 1 } )
 ---end
 --- 
 ---function MyEngine.client_onClientDataUpdate( self, data )
