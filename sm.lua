@@ -4492,7 +4492,7 @@ sm.shape = {}
 ---@param rotation? Quat The shape's world rotation. Defaults to no rotation (Optional)
 ---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
----@return Shape							The created block
+---@return Shape block The created block
 function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpawn) end
 
 ---*Server only*  
@@ -4502,7 +4502,7 @@ function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpaw
 ---@param rotation Quat The shape's world rotation. Defaults to no rotation (Optional)
 ---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
----@return Shape							The created part
+---@return Shape part The created part
 function sm.shape.createPart(uuid, position, rotation, dynamic, forceSpawn) end
 
 ---Returns the block/part description for the given uuid.  
