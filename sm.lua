@@ -5650,13 +5650,13 @@ function sm.item.getCharacterShape(uuid) end
 
 
 ---@class Edible
----@field hpGain number
----@field foodGain number
----@field waterGain number
+---@field hpGain? number
+---@field foodGain? number
+---@field waterGain? number
 
 ---Return the data for the edible [Shape].  
 ---@param uuid Uuid The shape uuid.
----@return Edible
+---@return Edible?
 function sm.item.getEdible(uuid) end
 
 
