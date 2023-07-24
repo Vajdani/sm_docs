@@ -5184,12 +5184,12 @@ function sm.container.spendFromSlot(container, slot, itemUuid, quantity, mustSpe
 
 ---*Server only*  
 ---Swaps two item slots.  
----@param container Container The first container.
----@param container Container The second container.
----@param slotFrom integer The first slot
----@param slotTo integer The second slot
+---@param fromContainer Container The first container.
+---@param toContainer Container The second container.
+---@param fromSlot integer The first slot
+---@param toSlot integer The second slot
 ---@return boolean
-function sm.container.swap(container, container, slotFrom, slotTo) end
+function sm.container.swap(fromContainer, fromSlot, toContainer, toSlot) end
 
 ---Returns the total number of a given item uuid in a container.  
 ---@param container Container The container.
