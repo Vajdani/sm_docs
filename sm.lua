@@ -4333,15 +4333,21 @@ sm.physics.filter = {
 }
 
 ---Physics types are used to define an object's characteristics is in the physics world. Upon a raycast or collision detection, these types are used to find out what object was intersected.  
----"invalid"No object.  
----"terrainSurface"The ground.  
----"terrainAsset"Trees and boulders.  
----"lift"A [Lift].  
----"body"A [Body].  
----"character"A [Character].  
----"joint"A [Joint].  
----"harvestable"A [Harvestable].  
----"vision"A collision area used by sensors.  
+---"limiter" The world border.
+---"terrainSurface" The ground.  
+---"terrainAsset" Terrain assets.  
+---"body" A [Body].  
+---"joint" A [Joint].  
+---"lift" A [Lift].  
+---"character" A [Character].  
+---"joint" A [Joint].  
+---"harvestable" A [Harvestable].  
+---"ragdoll" A ragdolled character.  
+---"areaTrigger" An [AreaTrigger].
+---"vision" A collision area used by sensors.
+---"voxelTerrain" A voxel terrain grid.
+---"tunnelCatcher" The trigger that teleports things when they fall off the world.
+---
 sm.physics.types = {
     "limiter",
     "terrainSurface",
