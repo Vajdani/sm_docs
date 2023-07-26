@@ -5736,6 +5736,11 @@ function sm.item.isPart(uuid) end
 ---@return boolean
 function sm.item.isTool(uuid) end
 
+---Check if the item is a blueprint shape.  
+---@param uuid Uuid The uuid.
+---@return boolean
+function sm.item.isBlueprintShape(uuid) end
+
 
 ---The <strong>Challenge</strong> api contains functions related to the Challenge game mode.  
 sm.challenge = {}
