@@ -4353,7 +4353,6 @@ sm.physics.filter = {
 ---"vision" A collision area used by sensors.
 ---"voxelTerrain" A voxel terrain grid.
 ---"tunnelCatcher" The trigger that teleports things when they fall off the world.
----
 sm.physics.types = {
     "limiter",
     "terrainSurface",
@@ -5752,7 +5751,6 @@ function sm.item.isTool(uuid) end
 ---@param uuid Uuid The uuid.
 ---@return boolean
 function sm.item.isBlueprintShape(uuid) end
-
 
 ---The <strong>Challenge</strong> api contains functions related to the Challenge game mode.  
 sm.challenge = {}
