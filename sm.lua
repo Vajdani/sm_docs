@@ -2909,6 +2909,14 @@ function Effect:isPlaying() end
 function Effect:setAutoPlay(Autoplay) end
 
 ---*Client only*  
+---The effect will:  
+---* Start when your distance is less than the startDistance.  
+---* End when your distance is over the stopDistance.  
+---@param startDistance number Distance at which to start the effect. Must be < than stopDistance and over 0.
+---@param stopDistance number Distance at which to stop the effect. Must be > than startDistance and over 0.
+function Effect:setStartStopDistance(startDistance, stopDistance) end
+
+---*Client only*  
 ---Offsets the position of the effect relatively to the host interactable.  
 ---**Note:**
 ---*Does not work if the effect was created without a host interactable.*
