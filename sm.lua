@@ -511,10 +511,6 @@ function Shape:getInterpolatedUp() end
 ---@return Vec3
 function Shape:getInterpolatedWorldPosition() end
 
----Return whether the shape uuid belongs to a harvest shape  
----@return boolean
-function Shape:getIsHarvest() end
-
 ---Return whether the shape uuid belongs to a stackable shape  
 ---@return boolean
 function Shape:getIsStackable() end
