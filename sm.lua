@@ -511,10 +511,6 @@ function Shape:getInterpolatedUp() end
 ---@return Vec3
 function Shape:getInterpolatedWorldPosition() end
 
----Return whether the shape uuid belongs to a stackable shape  
----@return boolean
-function Shape:getIsStackable() end
-
 ---Returns a table of all [Joint, joints] that are attached to the shape.  
 ---Will return all attached joints when onlyChildJoints is set to false.  
 ---Will only get the joints which are subshapes to the shape when onlySubshapes is set to true.  
@@ -4543,6 +4539,10 @@ function sm.shape.uuidExists(uuid) end
 ---@return boolean
 function sm.shape.getIsHarvest(uuid) end
 
+---Return whether the shape uuid belongs to a stackable shape  
+---@param uuid Uuid The shape uuid.
+---@return boolean
+function sm.shape.getIsStackable(uuid) end
 
 ---A <strong>body</strong> is a collection of [Shape, shapes] that are built together. Bodies can be connected to other bodies using [Joint, joints] such as the bearing.  
 sm.body = {}
