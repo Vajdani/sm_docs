@@ -7,6 +7,7 @@
 ---@operator sub(Vec3): Vec3
 ---@operator mul(Vec3): Vec3
 ---@operator div(number): Vec3
+---@operator unm: Vec3
 ---A userdata object representing a 3D <strong>vector</strong>.  
 local Vec3 = {}
 
@@ -2261,8 +2262,15 @@ function AreaTrigger:getHostInteractable() end
 ---@return integer
 function AreaTrigger:getId() end
 
----Gets the shapes inside the area trigger  
----@return Shape[]
+---@class AreaTriggerShape
+---@field shape Shape
+---@field triggerWorldPosition Vec3
+---@field triggerLocalPosition Vec3
+---@field shapeWorldPosition Vec3
+---@field shapeLocalPosition Vec3
+
+---Gets the shapes inside the area trigger.
+---@return AreaTriggerShape[]
 function AreaTrigger:getShapes() end
 
 ---Returns the size of an area trigger.  
@@ -2336,7 +2344,7 @@ function World:isIndoor() end
 ---Load a cell for player. The cell will stay loaded until the player steps into the cell, or the cell is released with releaseCell (and no player is close enough to load the cell).  
 ---@param x integer Cell X position.
 ---@param y integer Cell Y Position.
----@param player Player A player to load for, can be nil.
+---@param player Player A player to load for the cell for.
 ---@param callback? string Lua function to call when cell is loaded. Callback parameters are ( world, x, y, player, params, handle )
 ---@param params? any Parameter object passed to the callback.
 ---@param ref? ref Script ref to callback object.
@@ -2644,6 +2652,7 @@ function Harvestable:setParams(data) end
 function Harvestable:setPoseWeight(index, value) end
 
 ---Set the world coordinates of a harvestable. Can only be used on kinematic harvestables.  
+---Can be used on both the client and the server, but using it on the server only affects the host.
 ---@param position Vec3 The position.
 function Harvestable:setPosition(position) end
 
@@ -2653,6 +2662,7 @@ function Harvestable:setPosition(position) end
 function Harvestable:setPublicData(data) end
 
 ---Set the quaternion rotation of a harvestable. Can only be used on kinematic harvestables.  
+---Can be used on both the client and the server, but using it on the server only affects the host.
 ---@param rotation Quat The rotation.
 function Harvestable:setRotation(rotation) end
 
@@ -2803,7 +2813,7 @@ function BuilderGuide:update() end
 ---A userdata object representing a <strong>cull sphere group</strong>.  
 local CullSphereGroup = {}
 
----**Get**:  
+---**Get**:
 ---Returns the id of the sphere group.
 ---@type int
 CullSphereGroup.id = {}
@@ -4312,19 +4322,7 @@ function sm.color.new(hexInt) end
 ---Contains functions regarding the physics engine.  
 sm.physics = {}
 
----Collision filter types  
----dynamicBody  
----staticBody  
----character  
----areaTrigger  
----joints  
----terrainSurface  
----terrainAsset  
----harvestable  
----areaTrigger  
----static  
----default  
----all  
+---Collision filter types
 sm.physics.filter = {
     all = -1,
     dynamicBody = 1,
@@ -4508,7 +4506,7 @@ sm.shape = {}
 ---@param rotation? Quat The shape's world rotation. Defaults to no rotation (Optional)
 ---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
----@return Shape							The created block
+---@return Shape block The created block
 function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpawn) end
 
 ---*Server only*  
@@ -4518,7 +4516,7 @@ function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpaw
 ---@param rotation Quat The shape's world rotation. Defaults to no rotation (Optional)
 ---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
----@return Shape							The created part
+---@return Shape part The created part
 function sm.shape.createPart(uuid, position, rotation, dynamic, forceSpawn) end
 
 ---Returns the block/part description for the given uuid.  
@@ -5200,12 +5198,12 @@ function sm.container.spendFromSlot(container, slot, itemUuid, quantity, mustSpe
 
 ---*Server only*  
 ---Swaps two item slots.  
----@param container Container The first container.
----@param container Container The second container.
----@param slotFrom integer The first slot
----@param slotTo integer The second slot
+---@param fromContainer Container The first container.
+---@param toContainer Container The second container.
+---@param fromSlot integer The first slot
+---@param toSlot integer The second slot
 ---@return boolean
-function sm.container.swap(container, container, slotFrom, slotTo) end
+function sm.container.swap(fromContainer, fromSlot, toContainer, toSlot) end
 
 ---Returns the total number of a given item uuid in a container.  
 ---@param container Container The container.
@@ -5623,7 +5621,7 @@ function sm.event.sendToInteractable(interactable, callback, args) end
 ---@return boolean
 function sm.event.sendToPlayer(player, callback, args) end
 
----Sends an event to a specified [ScriptableObject].  
+---Sends an event to a specified [ScriptableObject].
 ---@param scriptableObject ScriptableObject The scriptableObject.
 ---@param callback string The function name in a scriptableObject script.
 ---@param args? any Optional arguments to be sent to the callback.
@@ -5666,13 +5664,13 @@ function sm.item.getCharacterShape(uuid) end
 
 
 ---@class Edible
----@field hpGain number
----@field foodGain number
----@field waterGain number
+---@field hpGain? number
+---@field foodGain? number
+---@field waterGain? number
 
 ---Return the data for the edible [Shape].  
 ---@param uuid Uuid The shape uuid.
----@return Edible
+---@return Edible?
 function sm.item.getEdible(uuid) end
 
 
