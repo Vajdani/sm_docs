@@ -511,14 +511,6 @@ function Shape:getInterpolatedUp() end
 ---@return Vec3
 function Shape:getInterpolatedWorldPosition() end
 
----Return whether the shape uuid belongs to a harvest shape  
----@return boolean
-function Shape:getIsHarvest() end
-
----Return whether the shape uuid belongs to a stackable shape  
----@return boolean
-function Shape:getIsStackable() end
-
 ---Returns a table of all [Joint, joints] that are attached to the shape.  
 ---Will return all attached joints when onlyChildJoints is set to false.  
 ---Will only get the joints which are subshapes to the shape when onlySubshapes is set to true.  
@@ -2919,6 +2911,14 @@ function Effect:isPlaying() end
 function Effect:setAutoPlay(Autoplay) end
 
 ---*Client only*  
+---The effect will:  
+---* Start when your distance is less than the startDistance.  
+---* End when your distance is over the stopDistance.  
+---@param startDistance number Distance at which to start the effect. Must be < than stopDistance and over 0.
+---@param stopDistance number Distance at which to stop the effect. Must be > than startDistance and over 0.
+function Effect:setStartStopDistance(startDistance, stopDistance) end
+
+---*Client only*  
 ---Offsets the position of the effect relatively to the host interactable.  
 ---**Note:**
 ---*Does not work if the effect was created without a host interactable.*
@@ -4331,15 +4331,20 @@ sm.physics.filter = {
 }
 
 ---Physics types are used to define an object's characteristics is in the physics world. Upon a raycast or collision detection, these types are used to find out what object was intersected.  
----"invalid"No object.  
----"terrainSurface"The ground.  
----"terrainAsset"Trees and boulders.  
----"lift"A [Lift].  
----"body"A [Body].  
----"character"A [Character].  
----"joint"A [Joint].  
----"harvestable"A [Harvestable].  
----"vision"A collision area used by sensors.  
+---"limiter" The world border.
+---"terrainSurface" The ground.  
+---"terrainAsset" Terrain assets.  
+---"body" A [Body].  
+---"joint" A [Joint].  
+---"lift" A [Lift].  
+---"character" A [Character].  
+---"joint" A [Joint].  
+---"harvestable" A [Harvestable].  
+---"ragdoll" A ragdolled character.  
+---"areaTrigger" An [AreaTrigger].
+---"vision" A collision area used by sensors.
+---"voxelTerrain" A voxel terrain grid.
+---"tunnelCatcher" The trigger that teleports things when they fall off the world.
 sm.physics.types = {
     "limiter",
     "terrainSurface",
@@ -4534,6 +4539,10 @@ function sm.shape.uuidExists(uuid) end
 ---@return boolean
 function sm.shape.getIsHarvest(uuid) end
 
+---Return whether the shape uuid belongs to a stackable shape  
+---@param uuid Uuid The shape uuid.
+---@return boolean
+function sm.shape.getIsStackable(uuid) end
 
 ---A <strong>body</strong> is a collection of [Shape, shapes] that are built together. Bodies can be connected to other bodies using [Joint, joints] such as the bearing.  
 sm.body = {}
@@ -5734,6 +5743,10 @@ function sm.item.isPart(uuid) end
 ---@return boolean
 function sm.item.isTool(uuid) end
 
+---Check if the item is a blueprint shape.  
+---@param uuid Uuid The uuid.
+---@return boolean
+function sm.item.isBlueprintShape(uuid) end
 
 ---The <strong>Challenge</strong> api contains functions related to the Challenge game mode.  
 sm.challenge = {}
