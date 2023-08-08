@@ -3310,7 +3310,8 @@ function Tool:isCrouching() end
 function Tool:isEquipped() end
 
 ---*Client only*  
----Returns whether the player is in first person view where the viewpoint is rendered from the player's perspective. Otherwise, the player is in third person view where the camera is behind the player.  
+---Returns whether the player is in first person view where the viewpoint is rendered from the player's perspective. Otherwise, the player is in third person view where the camera is behind the player.
+---Automatically returns false if the tool isn't local to the client.
 ---@return boolean
 function Tool:isInFirstPersonView() end
 
