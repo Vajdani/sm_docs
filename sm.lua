@@ -753,6 +753,7 @@ Body.worldRotation = {}
 ---@param size Vec3 The shape's size.
 ---@param position Vec3 The shape's local position.
 ---@param forceAccept? boolean Set true to force the body to accept the shape. (Defaults to true)
+---@return Shape shape
 function Body:createBlock(uuid, size, position, forceAccept) end
 
 ---*Server only*  
@@ -762,6 +763,7 @@ function Body:createBlock(uuid, size, position, forceAccept) end
 ---@param z_axis Vec3 The shape's local z direction.
 ---@param x_axis Vec3 The shape's local x direction.
 ---@param forceAccept? boolean Set true to force the body to accept the shape. (Defaults to true)
+---@return Shape shape
 function Body:createPart(uuid, position, z_axis, x_axis, forceAccept) end
 
 ---*Server only*  
@@ -4553,6 +4555,7 @@ sm.body = {}
 ---@param position Vec3 The body's world position.
 ---@param rotation? Quat The body's world rotation. (Defaults to [sm.quat.identity])
 ---@param isDynamic? boolean Set true if the body is dynamic or false if the body is static. (Defaults to true)
+---@return Body body
 function sm.body.createBody(position, rotation, isDynamic) end
 
 ---*Server only*  
