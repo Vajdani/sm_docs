@@ -2336,7 +2336,7 @@ function World:isIndoor() end
 ---Load a cell for player. The cell will stay loaded until the player steps into the cell, or the cell is released with releaseCell (and no player is close enough to load the cell).  
 ---@param x integer Cell X position.
 ---@param y integer Cell Y Position.
----@param player Player A player to load for the cell for.
+---@param player? Player A player to load for the cell for.
 ---@param callback? string Lua function to call when cell is loaded. Callback parameters are ( world, x, y, player, params, handle )
 ---@param params? any Parameter object passed to the callback.
 ---@param ref? ref Script ref to callback object.
@@ -5077,6 +5077,7 @@ function sm.cell.getInteractablesByUuid(x, y, uuid) end
 
 ---@class NodeParams
 ---@field name string
+---@field connections table
 
 ---@class Node
 ---@field scale Vec3
