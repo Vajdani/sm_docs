@@ -1119,7 +1119,7 @@ function Interactable:getShape() end
 ---@return Interactable
 function Interactable:getSingleParent() end
 
----Returns the steering angle of an steering interactable.  
+---Returns the steering direction of a seat. (A = -1, D = 1)
 ---@return number
 function Interactable:getSteeringAngle() end
 
@@ -1153,8 +1153,8 @@ function Interactable:getSteeringJointSettings(joint) end
 ---@return boolean
 function Interactable:getSteeringJointUnlocked(joint) end
 
----Returns the [Character] that is locking the controller.  
----@return Character
+---Returns the throttle direction of a seat. (W = 1, S = -1)
+---@return number
 function Interactable:getSteeringPower() end
 
 ---Returns the interactable type of an interactable.  
