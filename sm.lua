@@ -4507,7 +4507,7 @@ function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpaw
 ---Create a new part  
 ---@param uuid Uuid The uuid of the shape.
 ---@param position Vec3 The shape's world position.
----@param rotation Quat The shape's world rotation. Defaults to no rotation (Optional)
+---@param rotation? Quat The shape's world rotation. Defaults to no rotation (Optional)
 ---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
 ---@return Shape part The created part
@@ -5861,6 +5861,7 @@ sm.harvestable = {}
 ---@param position Vec3 The harvestable's world position.
 ---@param rotation? Quat The harvestable's world rotation, optional uses identity rotation if nil.
 ---@param slopeNormal? Vec3 The harvestable's slope normal. For "skew" and "rotate" slope settings, optional uses z axis if nil.
+---@return Harvestable
 function sm.harvestable.create(uuid, position, rotation, slopeNormal) end
 
 ---*Server only*  
