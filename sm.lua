@@ -3560,7 +3560,7 @@ function GuiInterface:addGridItem(gridName, item) end
 ---Adds items to a grid from json  
 ---@param gridName string The name of the grid
 ---@param jsonPath string Json file path
----@param additionalData table Additional data to the json (Optional)
+---@param additionalData? table Additional data to the json (Optional)
 function GuiInterface:addGridItemsFromFile(gridName, jsonPath, additionalData) end
 
 ---*Client only*
