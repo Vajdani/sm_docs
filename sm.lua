@@ -2036,10 +2036,10 @@ function Character:setMovementWeights(lower, upper) end
 ---*Client only*  
 ---Sets the name tag display value for the character  
 ---@param name string The new name tag text value.
----@param color? color The color of the name. (defaults to white)
----@param requiresLoS? bool Whether broken line of sight will hide the name tag.
----@param renderDistance? float Max distance the name tag will render in.
----@param fadeDistance? float Distance where fade out will start.
+---@param color? Color The color of the name. (defaults to white)
+---@param requiresLoS? boolean Whether broken line of sight will hide the name tag.
+---@param renderDistance? number Max distance the name tag will render in.
+---@param fadeDistance? number Distance where fade out will start.
 function Character:setNameTag(name, color, requiresLoS, renderDistance, fadeDistance) end
 
 ---*Server only*  
