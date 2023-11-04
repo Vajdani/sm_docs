@@ -6619,11 +6619,21 @@ function sm.gui.createFertilizerContainerGui(destroyOnClose) end
 ---@return GuiInterface
 function sm.gui.createGasContainerGui(destroyOnClose) end
 
+
+---@class GuiSettings
+---@field isHud? boolean Whether the gui is part of the HUD or not
+---@field isInteractive? boolean Whether the gui is interactive or not
+---@field needsCursor? boolean Whether the gui makes use of the mouse cursor or not
+---@field hidesHotbar? boolean Whether the gui hides the hotbar or not
+---@field isOverlapped? boolean Unknown
+---@field backgroundAlpha? number The alpha of the background(0 - transparent | 1 - opaque, black background)
+
+
 ---*Client only*  
 ---Create a GUI from a layout file.  
 ---@param layout string Path to the layout file
 ---@param destroyOnClose? boolean If true the gui is destroyed when closed, otherwise the gui can be reused.
----@param settings? table Table with bool settings for: isHud, isInteractive, needsCursor
+---@param settings? GuiSettings Table with bool settings for: isHud, isInteractive, needsCursor
 ---@return GuiInterface
 function sm.gui.createGuiFromLayout(layout, destroyOnClose, settings) end
 
