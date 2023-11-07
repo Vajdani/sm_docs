@@ -2179,7 +2179,7 @@ function Player:sendCharacterEvent(event) end
 
 ---*Server only*  
 ---Sets the character the player is controlling.  
----@param character Character The character.
+---@param character? Character The character.
 function Player:setCharacter(character) end
 
 ---*Client only*  
