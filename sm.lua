@@ -3065,7 +3065,7 @@ Unit.visionFrustum = {}
 ---*Server only*  
 ---Creates a Ai State from a name (See [AiState])  
 ---@param stateName string Name of predefined ai state.
----@return AiState					The ai state.
+---@return AiState state The ai state.
 function Unit:createState(stateName) end
 
 ---*Server only*  
@@ -4049,40 +4049,41 @@ function sm.util.bezier3(c0, c1, c2, c3, t) end
 ---@return number
 function sm.util.clamp(value, min, max) end
 
----Applies an easing function to a given input.  
----Easing function names:  
----<em>linear</em>  
----<em>easeInQuad</em>  
----<em>easeOutQuad</em>  
----<em>easeInOutQuad</em>  
----<em>easeInCubic</em>  
----<em>easeOutCubic</em>  
----<em>easeInOutCubic</em>  
----<em>easeInQuart</em>  
----<em>easeOutQuart</em>  
----<em>easeInOutQuart</em>  
----<em>easeInQuint</em>  
----<em>easeOutQuint</em>  
----<em>easeInOutQuint</em>  
----<em>easeInSine</em>  
----<em>easeOutSine</em>  
----<em>easeInOutSine</em>  
----<em>easeInCirc</em>  
----<em>easeOutCirc</em>  
----<em>easeInOutCirc</em>  
----<em>easeInExpo</em>  
----<em>easeOutExpo</em>  
----<em>easeInOutExpo</em>  
----<em>easeInElastic</em>  
----<em>easeOutElastic</em>  
----<em>easeInOutElastic</em>  
----<em>easeInBack</em>  
----<em>easeOutBack</em>  
----<em>easeInOutBack</em>  
----<em>easeInBounce</em>  
----<em>easeOutBounce</em>  
----<em>easeInOutBounce</em>  
----@param easing string The easing function name.
+---@alias EasingFunction string
+---| "linear"  
+---| "easeInQuad"  
+---| "easeOutQuad"  
+---| "easeInOutQuad"  
+---| "easeInCubic"  
+---| "easeOutCubic"  
+---| "easeInOutCubic"  
+---| "easeInQuart"  
+---| "easeOutQuart"  
+---| "easeInOutQuart"  
+---| "easeInQuint"  
+---| "easeOutQuint"  
+---| "easeInOutQuint"  
+---| "easeInSine"  
+---| "easeOutSine"  
+---| "easeInOutSine"  
+---| "easeInCirc"  
+---| "easeOutCirc"  
+---| "easeInOutCirc"  
+---| "easeInExpo"  
+---| "easeOutExpo"  
+---| "easeInOutExpo"  
+---| "easeInElastic"  
+---| "easeOutElastic"  
+---| "easeInOutElastic"  
+---| "easeInBack"  
+---| "easeOutBack"  
+---| "easeInOutBack"  
+---| "easeInBounce"  
+---| "easeOutBounce"  
+---| "easeInOutBounce"  
+
+---Applies an easing function to a given input.
+---@param easing EasingFunction The easing function name.
 ---@param p number The easing function input.
 ---@return number
 function sm.util.easing(easing, p) end
