@@ -3874,7 +3874,6 @@ function GuiInterface:trackQuest(name, title, mainQuest, questTasks) end
 
 ---*Client only*  
 ---Removes a quest from the quest tracker  
----/  
 ---@param questName string The name of quest
 function GuiInterface:untrackQuest(questName) end
 
@@ -5981,11 +5980,701 @@ function sm.cullSphereGroup.newCullSphereGroup() end
 ---For more information on how to setup effects please take a look in the Effects/Database/EffectSets folder in the game data.  
 sm.effect = {}
 
+---All the vanilla effect names that can be used with sm.effect functions. If the effect doesnt play, then the effect isnt present in the current gamemode. (Can be fixed by adding it to your effect set)
+---@alias EffectName
+---| "DestructableTape - TapeCorner"
+---| "PropaneTank - ActivateBig"
+---| "DestructableTape - TapeCornerBig"
+---| "PropaneTank - ActivateSmall"
+---| "DestructableTape - TapeRoll"
+---| "DestructableTape - TapeRollBig"
+---| "DestructableTape - cocoon01"
+---| "DestructableTape - cocoon02"
+---| "Explosion - Debris"
+---| "PropaneTank - ExplosionSmall"
+---| "PropaneTank - SingleActivate"
+---| "Resourcecollector - PutIn"
+---| "MountedPotatoRifle - Shoot"
+---| "Resourcecollector - TakeOut"
+---| "Beacon - Idle"
+---| "Mountedwatercanon - Shoot"
+---| "NoteTerminal - Active"
+---| "BubbleBath"
+---| "NoteTerminal - Interact"
+---| "DestructableTape - DoorwayDestruction"
+---| "PistonExhaust"
+---| "PropaneTank - ExplosionBig"
+---| "PowerSocket - Activate"
+---| "DestructableTape - Tape"
+---| "Collision - SlidingA"
+---| "Collision - SlidingB"
+---| "Projectile - Destroy"
+---| "Weapon - Impact"
+---| "Collision - Impact"
+---| "Projectile - Hit"
+---| "Sledgehammer - Destroy"
+---| "Sledgehammer - Hit"
+---| "Sledgehammer - NoProgress"
+---| "Collision - RollingA"
+---| "Collision - RollingB"
+---| "Character - Hit"
+---| "SledgehammerHit - Default"
+---| "Projectile - HitWater"
+---| "Multiknife - Hit"
+---| "Multiknife - Complete"
+---| "Mechanic - EatBaguette"
+---| "PaintTool - NoAmmo"
+---| "BearingDrill - Use"
+---| "Eat - Drink"
+---| "Eat - DrinkFinish"
+---| "Eat - DrinkSound"
+---| "Eat - EatFinish"
+---| "Eat - Munch"
+---| "Eat - MunchFP"
+---| "Eat - MunchSound"
+---| "PaintTool - Close"
+---| "Itemtool - FPFertilizerUse"
+---| "Mechanic - ReciveBaguette"
+---| "PaintTool - Open"
+---| "Itemtool - FertilizerUse"
+---| "PaintTool - Paint"
+---| "Multiknife - Use"
+---| "Forest - SmallFog"
+---| "Hideout - Smoke"
+---| "Lakes - Floatingdebri"
+---| "AtmosphericDust"
+---| "ChallengeAmbience"
+---| "Water - Waterleak01"
+---| "ChemicalLakes - SurfaceBubblesBig"
+---| "ChemicalLakes - SurfaceBubblesSmall"
+---| "Critter - Butterfly01"
+---| "Critter - Butterfly02"
+---| "Critter - Fly"
+---| "Critter - NightMoth"
+---| "Critter - Rottingsmoke"
+---| "OutdoorAmbience"
+---| "Forest - Fireflies"
+---| "Forest - Grassblowing"
+---| "Water - Waterleak02"
+---| "Forest - LeafsBlowing"
+---| "Lakes - bubbles"
+---| "Forest - MassiveFog"
+---| "butterfly"
+---| "flies01"
+---| "flies02"
+---| "Tree - CrownCollapse Pine"
+---| "Tree - CrownCollapse Spurce"
+---| "Tree - BreakTrunk Pine"
+---| "Tree - BreakTrunk PineHalf"
+---| "Tree - BreakTrunk PineQuarter"
+---| "Tree - BreakTrunk Spruce"
+---| "Tree - BreakTrunk SpruceHalf"
+---| "Tree - BreakTrunk Birch"
+---| "Tree - CrownCollapse"
+---| "Stone - BreakChunk"
+---| "Stone - CrackRock"
+---| "Stone - BreakChunk small"
+---| "ConstructionLight"
+---| "EncryptorLight"
+---| "EnvironmentAmbientLight_Large"
+---| "EnvironmentAmbientLight_Medium"
+---| "EnvironmentAmbientLight_Small"
+---| "EnvironmentPointLight_Static_Medium"
+---| "EnvironmentSpotLight_Dynamic_Medium"
+---| "EnvironmentSpotLight_Dynamic_Small"
+---| "EnvironmentSpotLight_Static_Large"
+---| "EnvironmentSpotLight_Static_Medium"
+---| "EnvironmentSpotLight_Static_Small"
+---| "FactoryLight"
+---| "FloodLight"
+---| "FluorescentLight"
+---| "FreshLight"
+---| "HeadLight"
+---| "PackingtableLight"
+---| "AreaLight"
+---| "ShackLight"
+---| "PosterLight"
+---| "Fire - gradual"
+---| "Fire - small01"
+---| "Fire - vertical"
+---| "Fire - lowburn"
+---| "Fire -medium01_putout"
+---| "Fire- Smoke Medium01"
+---| "Fire - large01_putout"
+---| "FireColorTest"
+---| "Smoke - GroundSmokeMassive"
+---| "Smoke - ash"
+---| "Smoke - blowing01"
+---| "Smoke - blowing02"
+---| "Smoke - blowing03"
+---| "Steam - quench"
+---| "Smoke - embers"
+---| "Fire -medium01"
+---| "Smoke - pillar01"
+---| "Smoke - pillar02"
+---| "Fire - large01"
+---| "Fire - Shipwreck"
+---| "Smoke - pillar03"
+---| "Water - BucketGetWater"
+---| "Water - splash01"
+---| "Water - WaterProjectileTrail"
+---| "Water - splash02"
+---| "Water - HitWaterTiny"
+---| "Water - HitWaterMassive"
+---| "Water - HitWaterBig"
+---| "Water - HitWaterSmall"
+---| "GasEngine - Level 2"
+---| "GasEngine - Level 3"
+---| "GasEngine - Level 4"
+---| "GasEngine - Level 1"
+---| "GasEngine - Level 5"
+---| "GasEngine - Scrap"
+---| "Thruster - Level 5"
+---| "Thruster - Level 2"
+---| "Thruster - Level 1"
+---| "Thruster - Level 4"
+---| "Thruster - Level 3"
+---| "Thruster - Ground effect"
+---| "ElectricEngine - Level 3"
+---| "ElectricEngine - Level 4"
+---| "ElectricEngine - Level 1"
+---| "ElectricEngine - Level 5"
+---| "ElectricEngine - Level 2"
+---| "Suspension - Level 1"
+---| "Suspension - Level 2"
+---| "Suspension - Level 3"
+---| "Suspension - Level 4"
+---| "Suspension - Level 5"
+---| "Suspension"
+---| "Sensor off"
+---| "Sensor on"
+---| "Sensor off - Level 2"
+---| "Sensor off - Level 3"
+---| "Sensor off - Level 4"
+---| "Sensor off - Level 5"
+---| "Sensor on - Level 1"
+---| "Sensor on - Level 2"
+---| "Sensor on - Level 3"
+---| "Sensor on - Level 4"
+---| "Sensor on - Level 5"
+---| "Sensor off - Level 1"
+---| "Mechanic - KoLoop"
+---| "Mechanic - MeleeHit"
+---| "Mechanic - StatusHungry"
+---| "Mechanic - StatusThirsty"
+---| "Mechanic - StatusUnderwater"
+---| "Mechanic - Swimbackward"
+---| "Mechanic - Swimforeward"
+---| "Mechanic crouch"
+---| "Mechanic crouch walk"
+---| "Mechanic - HurtDrown"
+---| "Mechanic getUp"
+---| "Mechanic - Hurthunger"
+---| "Mechanic - Hurtpoision"
+---| "Mechanic - Hurtshock"
+---| "Mechanic - Hurt"
+---| "Mechanic walk"
+---| "Mechanic - HurtFire"
+---| "Mechanic underwater"
+---| "Mechanic land"
+---| "Mechanic jump"
+---| "Mechanic - JetpackBurstThruster"
+---| "Mechanic - Ko"
+---| "Mechanic - JetpackThruster"
+---| "Controller - Default"
+---| "Controller - Level 1"
+---| "Controller - Level 2"
+---| "Controller - Level 3"
+---| "Controller - Level 4"
+---| "Controller - Level 5"
+---| "BroccoliProjectile - Hit"
+---| "CarrotProjectile - Hit"
+---| "PesticideProjectile - Hit"
+---| "ChemicalProjectile - Attached"
+---| "PineappleProjectile - Hit"
+---| "FertilizerProjectile - Attached"
+---| "FertilizerProjectile - Hit"
+---| "GlowstickProjectile - Attached"
+---| "TapeProjectile - Hit"
+---| "TomatoProjectile - Hit"
+---| "GlowstickProjectile - Bounce"
+---| "WaterProjectile - Hit"
+---| "TapeProjectile - Attached"
+---| "GlowstickProjectile - Hit"
+---| "RedbeetProjectile - Hit"
+---| "PotatoProjectile - Hit"
+---| "BlueberryProjectile - Hit"
+---| "BananaProjectile - Hit"
+---| "OrangeProjectile - Hit"
+---| "ChemicalProjectile - Hit"
+---| "Pesticide - Cloud"
+---| "PesticideProjectile - Attached"
+---| "Piston - Level 1"
+---| "Piston - Level 2"
+---| "Piston - Level 3"
+---| "Piston - Level 4"
+---| "Piston - Level 5"
+---| "Piston - Default"
+---| "ShipFire - medium01"
+---| "Shipwreck - sparks03"
+---| "Shipwreck - AmbianceSound"
+---| "ShipFire - large01"
+---| "Shipwreck - sparks01"
+---| "ShipFire - lowburn"
+---| "Shipwreck - sparks02"
+---| "Fence - PlankCornerDestruction"
+---| "Sign - HideoutSign07 Destruction"
+---| "Fence - PlankLongDestruction"
+---| "Sign - HideoutSign04 Destruction"
+---| "Fence - FarmPlank04Destruction"
+---| "Fence - FarmPlank02Destruction"
+---| "Fence - HideoutFence01 Destruction"
+---| "Sign - HideoutSign03 Destruction"
+---| "Fence - FarmPlank03Destruction"
+---| "Fence - PlankShortDestruction"
+---| "Fence - HideoutFence04 Destruction"
+---| "Fence - HideoutFence02 Destruction"
+---| "Fence - HideoutFence05 Destruction"
+---| "Fence - FarmPlank01Destruction"
+---| "Fence - HideoutFence06 Destruction"
+---| "Loot - GlowItem"
+---| "Loot - Logbook"
+---| "Loot - Pickup"
+---| "LootCrate - EpicDestroy"
+---| "Loot - Logentry"
+---| "Loot - Logentryactivate"
+---| "LootProjectile - Hit"
+---| "Loot - LogfilesPickup"
+---| "Loot - OutfitCommonGlowItem"
+---| "Loot - OutfitCommonPickup"
+---| "Loot - OutfitEpicGlowItem"
+---| "EpicLoot - GlowItem"
+---| "Loot - OutfitEpicPickup"
+---| "Loot - OutfitRareGlowItem"
+---| "LootProjectile - Attached"
+---| "Loot - OutfitRarePickup"
+---| "EpicLootProjectile - Hit"
+---| "LootCrate - DestroyGlow"
+---| "Loot - PictureLogfiles"
+---| "Loot - AudioLogfiles"
+---| "LootCrate - Destroy"
+---| "EpicLootProjectile - Attached"
+---| "Plants - Destroyed"
+---| "Plants - Picked"
+---| "Plants - Done"
+---| "Plants - SoilbagUse"
+---| "Plants - Fertilizer"
+---| "Plants - Planted"
+---| "Packingstation - Load"
+---| "Packingstation - Tomatocrate"
+---| "Packingstation - Orange"
+---| "Packingstation - Activate"
+---| "Packingstation - Pineapplecrate"
+---| "Packingstation - ActivateSound"
+---| "Packingstation - Redbeetcrate"
+---| "Packingstation - Bananacrate"
+---| "Packingstation - Blueberrycrate"
+---| "Packingstation - Shoot"
+---| "Packingstation - Brocolicrate"
+---| "Packingstation - Roller"
+---| "Packingstation - Carrotcrate"
+---| "Craftbot - Unpack"
+---| "Craftbot - Work"
+---| "Refinery - WorkMetal"
+---| "Craftbot - Work01"
+---| "Refinery - WorkStone"
+---| "Craftbot - Work02"
+---| "Workbench - Finish"
+---| "Craftbot - Work02Torch"
+---| "Dispenserbot - Work01"
+---| "DispenserbotSpawner - Spawn"
+---| "Dressbot - Finish"
+---| "Dressbot - HeadWork01"
+---| "Dressbot - Idle"
+---| "Dressbot - Opendoors"
+---| "Workbench - Work01"
+---| "Dressbot - Start"
+---| "Workbench - Idle"
+---| "Dressbot - Work01"
+---| "Refinery - WorkWood"
+---| "Refinery - WoodBlockLog"
+---| "Cookbot - Idle"
+---| "Refinery - WoodBlock"
+---| "Refinary - Area"
+---| "Refinery - Unpack"
+---| "Cookbot - IdleSpecial02"
+---| "Cookbot - Start"
+---| "Refinery - Finish"
+---| "Cookbot - Finish"
+---| "Cookbot - IdleSpecial01"
+---| "Cookbot - Unpack"
+---| "Refinery - ScrapWoodBlock"
+---| "Cookbot - Work"
+---| "Refinery - ScrapStoneBlockLog"
+---| "Cookbot - Work01"
+---| "Refinery - ScrapStoneBlock"
+---| "Cookbot - Work02"
+---| "Refinery - ScrapMetalBlockLog"
+---| "Cookbot - Work03"
+---| "Refinery - ScrapMetalBlock"
+---| "Cookbot - Work03Salt"
+---| "Refinery - MetalBlockLog"
+---| "Craftbot - Finish"
+---| "Refinery - MetalBlock"
+---| "Refinery - ScrapWoodBlockLog"
+---| "Craftbot - Idle"
+---| "Refinery - Start"
+---| "Craftbot - IdleSpecial01"
+---| "Refinery - SuckStart"
+---| "Craftbot - IdleSpecial02"
+---| "Dressbot - Work02"
+---| "Craftbot - Start"
+---| "Treeparts - birch02_p04"
+---| "Treeparts - leafy02_p02"
+---| "Treeparts - leafy02_p03"
+---| "Treeparts - leafy02_p04"
+---| "Treeparts - birch02_p06"
+---| "Treeparts - leafy02_p06"
+---| "Treeparts - birch03_p03"
+---| "Treeparts - birch03_p04"
+---| "Treeparts - birch03_p05"
+---| "Treeparts - birch03_p06"
+---| "Treeparts - leafy01_p02"
+---| "Treeparts - leafy03_p06"
+---| "Treeparts - leafy03_p07"
+---| "Treeparts - leafy03_p08"
+---| "Treeparts - leafy03_p09"
+---| "Treeparts - pine01_p010"
+---| "Treeparts - pine01_p011"
+---| "Treeparts - pine01_p06"
+---| "Treeparts - pine01_p07"
+---| "Treeparts - pine01_p08"
+---| "Treeparts - pine01_p09"
+---| "Treeparts - pine02_p010"
+---| "Treeparts - pine02_p07"
+---| "Treeparts - pine02_p08"
+---| "Treeparts - pine02_p09"
+---| "Treeparts - pine03_p010"
+---| "Treeparts - pine03_p08"
+---| "Treeparts - pine03_p09"
+---| "Treeparts - spruce01_p05"
+---| "Treeparts - spruce02_p05"
+---| "Treeparts - spruce03_p05"
+---| "Treeparts - leafy02_p05"
+---| "Treeparts - birch02_p05"
+---| "Treeparts - birch03_p02"
+---| "Treeparts - leafy02_p07"
+---| "Treeparts - leafy03_p02"
+---| "Treeparts - leafy03_p03"
+---| "Treeparts - leafy03_p05"
+---| "Treeparts - birch01_p05"
+---| "Treeparts - leafy01_p04"
+---| "Treeparts_burntforest - spruce02"
+---| "Treeparts_burntforest - spruce01"
+---| "Treeparts_burntforest - spruce05"
+---| "Treeparts_burntforest - spruce03"
+---| "Treeparts_burntforest - spruce04"
+---| "Treeparts_burntforest - birch01"
+---| "Treeparts_burntforest - spiketree01"
+---| "Treeparts_burntforest - spiketree02"
+---| "Glowgorp - Walk"
+---| "Glowgorp - Pickup"
+---| "Glowgorp - Hit"
+---| "Glowgorp - Idlesound"
+---| "Glowgorp - Cardboardmunch"
+---| "Glowgorp - Jump"
+---| "Glowgorp - Destruct"
+---| "Saw - Debris"
+---| "Saw - SawBlade"
+---| "Drill - Debris"
+---| "Drill - StoneDrill"
+---| "Vacuumpipe - Blowout"
+---| "Vacuumpipe - Suction"
+---| "Haypile - Destruction"
+---| "Leafpile - Destruction"
+---| "Part - Upgrade"
+---| "Part - Removed"
+---| "Part - Electricity"
+---| "SpudgunSpinner - Windup"
+---| "SpudgunBasic - FPBasicMuzzel"
+---| "SpudgunSpinner - FPSpinnerMuzzel"
+---| "SpudgunSpinner - SpinnerMuzzel"
+---| "SpudgunBasic - BasicMuzzel"
+---| "SpudgunFrier - FrierMuzzel"
+---| "SpudgunFrier - FPFrierMuzzel"
+---| "SpudgunBasic - DefaultImpact01"
+---| "Hideout - PumpSuction"
+---| "Encryptor - Activation"
+---| "Barrier - Deactivation"
+---| "Encryptor - Deactivation"
+---| "Barrier - SledgeHammerHit"
+---| "Barrier - ShieldImpact"
+---| "Barrier - Activation"
+---| "Watercannon - Impact"
+---| "Watercannon - Muzzeflash"
+---| "Gui - LogbookPhotograph Flash"
+---| "Gui - PlayButtonShine"
+---| "Gui - Setwaypoint Flash"
+---| "Gui - CuztomizeMainMenuShine"
+---| "Gui - Setwaypoint Loop"
+---| "Gui - DressbotBackground"
+---| "Gui - Test"
+---| "Gui - DressbotBox"
+---| "Gui - UnboxItem"
+---| "Gui - Upgrade"
+---| "Gui - DressbotCollect"
+---| "Gui - DressbotDone"
+---| "Gui - DressbotUnboxCommon"
+---| "Gui - DressbotUnboxEpic"
+---| "Gui - DressbotUnboxGarmentButton"
+---| "Gui - CraftingDone"
+---| "Gui - DressbotUnboxGarmentButtonActivate"
+---| "Gui - UpgradeIcon"
+---| "Gui - CraftingDoneCollectButton"
+---| "Gui - DressbotUnboxRare"
+---| "Gui - LogbookIcon Flash"
+---| "Gui - CustomizationRewardItem"
+---| "Gui - LogbookNotification"
+---| "Unbox - Farmbot01"
+---| "Unbox - woc01"
+---| "Unbox - Totebot01"
+---| "Unbox - Haybot01"
+---| "Unbox - glowworm01"
+---| "Unbox - Tapebot01"
+---| "Paintcharacter - Erase"
+---| "Paintcharacter - Medium"
+---| "Paintcharacter - Large"
+---| "Paintcharacter - Small"
+---| "Arrow"
+---| "Robotparts - FarmbotHead"
+---| "Robotparts - HaybotFork"
+---| "Robotparts - FarmbotCannonarm"
+---| "Robotparts - FarmbotDrill"
+---| "Robotparts - FarmbotScyth"
+---| "Robotparts - TotebotLeg"
+---| "Robotparts - RedtapebotHead"
+---| "Robotparts - TapebotHead"
+---| "Robotparts - TotebotBody"
+---| "Robotparts - HaybotHead"
+---| "Robotparts - TapebotTorso"
+---| "Robotparts - HaybotBody"
+---| "Robotparts - TapebotLeftarm"
+---| "Robotparts - HaybotPelvis"
+---| "Builderguide - Buildcomplete"
+---| "Builderguide - Active"
+---| "Builderguide - Deactivate"
+---| "Builderguide - Background"
+---| "Builderguide - Stagecomplete"
+---| "Horn - Honk"
+---| "TapeBot - AlertedServo"
+---| "TapeBot - ChasingFotStep"
+---| "TapeBot - ChasingGunRattle"
+---| "TapeBot - ChasingScissor"
+---| "TapeBot - ChasingServo"
+---| "TapeBot - FotStep"
+---| "TapeBot - Scissor"
+---| "TapeBot - Servo"
+---| "TapeBot - Shoot"
+---| "TapeBot - HeadShot"
+---| "TapeBot - Hit"
+---| "TapeBot - Alerted"
+---| "TapeBot - AlertedFotStep"
+---| "TapeBot - AlertedGunRattle"
+---| "TapeBot - AlertedScissor"
+---| "TapeBot - Destroyed"
+---| "RedTapeBot - ExplosivesHit"
+---| "Woc - Run"
+---| "Woc - Eating"
+---| "Woc - Destruct"
+---| "Woc - Moo"
+---| "Woc - Walk"
+---| "Woc - Panic"
+---| "UnderwaterAmbiance"
+---| "WarehouseAmbiance"
+---| "SurvivalMusic"
+---| "Elevator - Opendoor"
+---| "ElevatorWall"
+---| "Elevator - Closedoor"
+---| "Elevator Button"
+---| "Elevator - Keycarduse"
+---| "ElevatorAmbiance"
+---| "Elevator - MoveOutside"
+---| "ElevatorMusic"
+---| "Oilgeyser - Picked"
+---| "Harvestable - Burnttree"
+---| "Tree - BurnedHit"
+---| "SlimyClam - Bubbles"
+---| "SlimyClam - BubblesAmbience"
+---| "SlimyClam - Destruct"
+---| "Stone - Stress"
+---| "Corn - Destruct"
+---| "beehive - destruct"
+---| "beehive - beeswarm"
+---| "Tree - LogAppear"
+---| "Tree - LeafRattle"
+---| "Tree - Ambient Birds"
+---| "Cotton - Fluff"
+---| "Tree - Falling"
+---| "Cotton - Picked"
+---| "Tree - Creak"
+---| "Harvestable - Marker"
+---| "Pigmentflower - Picked"
+---| "Oilgeyser - OilgeyserAmbience"
+---| "Oilgeyser - OilgeyserPickedLoop"
+---| "Tree - BirchHit"
+---| "Tree - DefaultHit"
+---| "Oilgeyser - OilgeyserLoop"
+---| "ToteBot - Sparks"
+---| "ToteBot - SparkAttack"
+---| "ToteBot - DestroyedParts"
+---| "ToteBot - Hit"
+---| "ToteBot - Alerted"
+---| "ToteBot - ChasePlayer"
+---| "ToteBot - Attack"
+---| "ToteBot - FotStep"
+---| "Haybot - ForkStep"
+---| "Haybot - Alerted"
+---| "Haybot - FotStep"
+---| "Haybot - Attack01"
+---| "Haybot - Destroyed"
+---| "Haybot - IdleSpecial01"
+---| "Haybot - Attack02"
+---| "Haybot - IdleSpecial02"
+---| "Haybot - Hit"
+---| "Haybot - Attack03"
+---| "Haybot - Metal"
+---| "Haybot - Servo"
+---| "Haybot - CaseplayerVoice"
+---| "Haybot - SprintAttack"
+---| "Farmbot - DestructionStartup01"
+---| "Farmbot - DestructionStartup02"
+---| "Farmbot - FotStepLight"
+---| "Farmbot - DestructionStartup03"
+---| "Farmbot - FotStepMedium"
+---| "Farmbot - DestructionStartup04"
+---| "Farmbot - Angry"
+---| "Farmbot - Shoot"
+---| "Farmbot - Attack01"
+---| "Farmbot - Attack02"
+---| "Farmbot - MoveHead"
+---| "Farmbot - Attack03"
+---| "Farmbot - MoveLegs"
+---| "Farmbot - Voice"
+---| "Farmbot - Attack04"
+---| "Farmbot - SprintBody"
+---| "Farmbot - RoamingIdle"
+---| "Farmbot - Attack05"
+---| "Farmbot - RunBody"
+---| "Farmbot - RattleSyth"
+---| "Farmbot - Hit"
+---| "Farmbot - FotStepHeavy"
+---| "Farmbot - Destroyed"
+---| "CustomizationRenderable"
+---| "ShapeRenderable"
+---| "Glowstick - Throw"
+---| "Glowstick - Hold"
+---| "Bucket - Throw"
+---| "Bucket - Fill"
+---| "FarmerBall - Struggle"
+---| "Farmerhideout - Accept"
+---| "Farmerhideout - Open"
+---| "FarmerBall - Help"
+---| "Farmerhideout - Close"
+---| "FarmerBall - Rolling"
+---| "Guiquest - Pausestarterquest"
+---| "Guiquest - Questupdate"
+---| "Questmarker - Pointmarker"
+---| "Questmarker - Pointmarker_small"
+---| "Guiquest - Newquest"
+---| "Questmarker - Zonearea"
+---| "Questmarker - Pointmarker_large"
+---| "Cinematic - Survivalstart01"
+---| "Cinematic - Survivalstart02"
+---| "ObserverBot - Move"
+---| "Supervisor - Fail"
+---| "ObserverBot - Write"
+---| "Supervisor - Generic"
+---| "PlayerStart - Glow"
+---| "BuildMode - Floor"
+---| "Buildarea - Oncreate"
+---| "Supervisor - Cheer"
+---| "CelebrationBot - Audio"
+---| "CelebrationBot - Confetti"
+---| "Celebrationbot - Activate"
+---| "ChallengeCrowd - Jump"
+---| "Ball"
+---| "Characterspawner - Activate"
+---| "Ballspawner - Activate"
+---| "Chest - Arrow"
+---| "Balltrigger - Activate"
+---| "Goal - Activate"
+---| "Soundcube - Activate"
+---| "Goal - Oncreate"
+---| "Boop - Floor"
+---| "SmallGoal - Activate"
+---| "MapInspector - On"
+---| "Builderbot - Thruster"
+---| "Cinematic - Challengemodecomplete"
+---| "Cinematic - Challengemodecomplete_audio"
+---| "Challengecamera - Potatolevel_01"
+---| "Challengecamera - Stuntlevel_07"
+---| "Challengecamera - Stuntlevel_08"
+---| "Challengecamera - Stuntlevel_09"
+---| "Challengecamera - Stuntlevel_10"
+---| "Challengecamera - ThrusterLevel_01"
+---| "Challengecamera - ThrusterLevel_02"
+---| "Challengecamera - ThrusterLevel_03"
+---| "Challengecamera - ThrusterLevel_04"
+---| "Challengecamera - ThrusterLevel_05"
+---| "Challengecamera - ThrusterLevel_06"
+---| "Challengecamera - Potatolevel_02"
+---| "Challengecamera - Potatolevel_03"
+---| "Challengecamera - ThrusterLevel_07"
+---| "Challengecamera - ThrusterLevel_08"
+---| "Challengecamera - ThrusterLevel_09"
+---| "Challengecamera - ThrusterLevel_10"
+---| "Challengecamera - Potatolevel_04"
+---| "Challengecamera - TutorialLevel_02"
+---| "Challengecamera - TutorialLevel_03"
+---| "Challengecamera - Potatolevel_05"
+---| "Challengecamera - TutorialLevel_05"
+---| "Challengecamera - TutorialLevel_06"
+---| "Challengecamera - Potatolevel_06"
+---| "Challengecamera - Potatolevel_07"
+---| "Challengecamera - Potatolevel_08"
+---| "Challengecamera - Potatolevel_09"
+---| "Challengecamera - Potatolevel_10"
+---| "Challengecamera - Puzzlelevel_01"
+---| "Challengecamera - Puzzlelevel_02"
+---| "Challengecamera - Puzzlelevel_03"
+---| "Challengecamera - Puzzlelevel_04"
+---| "Challengecamera - Puzzlelevel_05"
+---| "Challengecamera - Puzzlelevel_06"
+---| "Challengecamera - Puzzlelevel_07"
+---| "Challengecamera - Puzzlelevel_08"
+---| "Challengecamera - Puzzlelevel_09"
+---| "Challengecamera - Puzzlelevel_10"
+---| "Challengecamera - TutorialLevel_10"
+---| "Challengecamera - TutorialLevel_09"
+---| "Challengecamera - TutorialLevel_08"
+---| "Challengecamera - TutorialLevel_07"
+---| "Challengecamera - TutorialLevel_04"
+---| "Challengecamera - Stuntlevel_01"
+---| "Challengecamera - Stuntlevel_02"
+---| "Challengecamera - TutorialLevel_01"
+---| "Challengecamera - Stuntlevel_06"
+---| "Challengecamera - Stuntlevel_03"
+---| "Challengecamera - Stuntlevel_04"
+---| "Challengecamera - Stuntlevel_05"
+---| "Gui - Challengemode Approvedbannershine"
+---| "Gui - Stuntmancollectpressed"
+---| "Gui - Challengemode Stuntmanbackgroundshine"
+
 ---*Client only*  
 ---Creates an effect.  
 ---If you provide a host object to the effect then it will fetch position, velocity and orientation data from the interactable instead of relying on this information being fed to it.  
 ---This results in far more accurate positioning of effects that are supposed to stay attached to an object.  
----@param name string The name.
+---@param name EffectName|string The name.
 ---@param object? Interactable|Character|Harvestable The object the effect is attached to.
 ---@param name? string The bone name. (Defaults to not attached to a bone) (Optional)
 ---@return Effect
@@ -5993,13 +6682,13 @@ function sm.effect.createEffect(name, object, name) end
 
 ---*Client only*  
 ---Creates an 2d effect.  
----@param name string The name of the effect.
+---@param name EffectName|string The name of the effect.
 ---@return Effect
 function sm.effect.createEffect2D(name) end
 
 ---*Client only*  
 ---Estimates the radius of influence for an effect and instance parameters  
----@param name string The name of the effect.
+---@param name EffectName|string The name of the effect.
 ---@param parameters table Table of params
 ---@return number
 function sm.effect.estimateSize(name, parameters) end
@@ -6007,7 +6696,7 @@ function sm.effect.estimateSize(name, parameters) end
 ---Plays an effect. If this function is called on the server it will play the effect on all clients.  
 ---**Note:**
 ---*If you start a looping effect using this function you will not be able to stop it.<br>Please use [sm.effect.createEffect, createEffect] for looping effects.*
----@param name string The name.
+---@param name EffectName|string The name.
 ---@param position Vec3 The position.
 ---@param velocity? Vec3 The velocity. (Defaults to no velocity)
 ---@param rotation? Quat The rotation. (Defaults to no rotation)
@@ -6019,7 +6708,7 @@ function sm.effect.playEffect(name, position, velocity, rotation, scale, paramet
 ---Plays an effect. It will fetch position, velocity and orientation data from the host interactable.  
 ---**Note:**
 ---*If you start a looping effect using this function you will not be able to stop it.<br>Please use [sm.effect.createEffect, createEffect] for looping effects*
----@param name string The effect name.
+---@param name EffectName|string The effect name.
 ---@param object Interactable|Character|Harvestable The object the effect is attached to.
 ---@param boneName? string The bone name. (Optional)
 ---@param parameters? table The table containing the parameters for the effect. (Optional)
@@ -6227,11 +6916,131 @@ sm.audio = {}
 ---A table with all the names of available sounds in the game.  
 sm.audio.soundList = {}
 
+---All the audio names that can be used with sm.audio.play.
+---@alias AudioName
+---| "Ambient - Birds"
+---| "Ambient - Challenge"
+---| "Ambient - Field"
+---| "Blueprint - Build"
+---| "Blueprint - Camera"
+---| "Blueprint - Close"
+---| "Blueprint - Delete"
+---| "Blueprint - Open"
+---| "Blueprint - Save"
+---| "Blueprint - Select"
+---| "Blueprint - Share"
+---| "Brake"
+---| "Button off"
+---| "Button on"
+---| "Challenge - Fall"
+---| "Challenge - Start"
+---| "Challenge - Supervisor generic"
+---| "Character crouch"
+---| "Character get up"
+---| "Character hit"
+---| "Character jump"
+---| "Character land"
+---| "Character movement"
+---| "Character movement crouched"
+---| "Character wind"
+---| "Collision - Debris"
+---| "Collision - Multiple"
+---| "Collision - Rolling"
+---| "Collision - Single"
+---| "Collision - Sliding"
+---| "Collision - Vehicle"
+---| "ConnectTool"
+---| "ConnectTool - Equip"
+---| "ConnectTool - Idle"
+---| "ConnectTool - Released"
+---| "ConnectTool - Rotate"
+---| "ConnectTool - Selected"
+---| "ConnectTool - Unequip"
+---| "Construction - Block attached to joint"
+---| "Construction - Block placed"
+---| "Construction - Resize"
+---| "Dancebass"
+---| "Dancedrum"
+---| "Dancepad"
+---| "Dancevoice"
+---| "Destruction - Block destroyed"
+---| "Destruction - Resize"
+---| "ElectricEngine"
+---| "GUI Backpack closed"
+---| "GUI Backpack opened"
+---| "GUI Inventory highlight"
+---| "GUI Item drag"
+---| "GUI Item released"
+---| "GUI Quickbar highlight"
+---| "GUI Shape rotate"
+---| "Gas Explosion"
+---| "Gas Leak"
+---| "GasEngine"
+---| "Handbook - Close"
+---| "Handbook - Equip"
+---| "Handbook - Highlight"
+---| "Handbook - Open"
+---| "Handbook - Turn page"
+---| "Handbook - Unequip"
+---| "Horn"
+---| "Lever off"
+---| "Lever on"
+---| "Lift - Pickup object"
+---| "Lift placed"
+---| "Lift usage"
+---| "Music"
+---| "PaintTool - Close"
+---| "PaintTool - ColorPick"
+---| "PaintTool - Equip"
+---| "PaintTool - Erase"
+---| "PaintTool - Open"
+---| "PaintTool - Paint"
+---| "PaintTool - Reload"
+---| "PaintTool - Unequip"
+---| "Phaser"
+---| "Piston"
+---| "PotatoRifle - Equip"
+---| "PotatoRifle - NoAmmo"
+---| "PotatoRifle - Reload"
+---| "PotatoRifle - Shoot"
+---| "PotatoRifle - Unequip"
+---| "Radio"
+---| "RaftShark"
+---| "Retrobass"
+---| "Retrodrum"
+---| "Retrofmblip"
+---| "Retrovoice"
+---| "Retrowildblip"
+---| "Reverb - Challenge"
+---| "Reverb - Field"
+---| "Seat seated"
+---| "Seat unseated"
+---| "Sensor off"
+---| "Sensor on"
+---| "SequenceController"
+---| "SequenceController change rotation"
+---| "Sledgehammer - Equip"
+---| "Sledgehammer - Swing"
+---| "Sledgehammer - Unequip"
+---| "Suspension"
+---| "Thruster"
+---| "Thruster dust"
+---| "Toilet seated"
+---| "Toilet unseated"
+---| "Weapon - Hit"
+---| "WeldTool - Case 1"
+---| "WeldTool - Case 2"
+---| "WeldTool - Equip"
+---| "WeldTool - Error"
+---| "WeldTool - Sparks"
+---| "WeldTool - Unequip"
+---| "WeldTool - Weld"
+
 ---*Client only*  
 ---Plays a sound.  
 ---If position is specified, the sound will play at the given coordinates in the world. Otherwise, the sound will play normally.  
 ---For a list of available sounds to play, see [sm.audio.soundList].  
----@param sound string The sound to play.
+---@param sound AudioName|string The sound to play.
 ---@param position? Vec3 The world position of the sound. (Optional)
 function sm.audio.play(sound, position) end
 
@@ -7221,7 +8030,7 @@ function CharacterClass:client_onClientDataUpdate(data, channel) end
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Shape/Harvestable/nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
+---@param shooter Player|Shape|Harvestable|nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
 ---@param damage number The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7230,7 +8039,7 @@ function CharacterClass:client_onProjectile(position, airTime, velocity, project
 
 ---Called when the [Character] is hit by a melee hit.  
 ---@param position Vec3 The position in world space where the [Character] was hit.
----@param attacker Player/nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
+---@param attacker Player|nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7238,7 +8047,7 @@ function CharacterClass:client_onProjectile(position, airTime, velocity, project
 function CharacterClass:client_onMelee(position, attacker, damage, power, direction, normal) end
 
 ---Called when the [Character] collides with another object.  
----@param other Shape/Character/Harvestable/Lift/nil The other object. Nil if terrain.
+---@param other Shape|Character|Harvestable|Lift|nil The other object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that that the [Character] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that that the other object had at the point of collision.
@@ -7475,7 +8284,7 @@ function HarvestableClass:server_onUnload() end
 function HarvestableClass:server_onReceiveUpdate() end
 
 ---Called when the [Harvestable] collides with another object.  
----@param other Shape/Character The other object.
+---@param other Shape|Character The other object.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that the [Harvestable] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that the other object had at the point of collision.
@@ -7483,7 +8292,7 @@ function HarvestableClass:server_onReceiveUpdate() end
 function HarvestableClass:client_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal) end
 
 ---Called when the [Harvestable] collides with another object.  
----@param other Shape/Character The other object.
+---@param other Shape|Character The other object.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that the [Harvestable] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that the other object had at the point of collision.
@@ -7497,7 +8306,7 @@ function HarvestableClass:server_onCollision(other, position, selfPointVelocity,
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Shape/Harvestable/nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
+---@param shooter Player|Shape|Harvestable|nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7511,7 +8320,7 @@ function HarvestableClass:client_onProjectile(position, airTime, velocity, proje
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7527,7 +8336,7 @@ function HarvestableClass:server_onExplosion(center, destructionLevel) end
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Harvestable] was hit.
----@param attacker Player/nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
+---@param attacker Player|nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7538,7 +8347,7 @@ function HarvestableClass:client_onMelee(position, attacker, damage, power, dire
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Harvestable] was hit.
----@param attacker Player/Unit/nil The attacker. Can be a [Player], [Unit] or nil if unknown.
+---@param attacker Player|Unit|nil The attacker. Can be a [Player], [Unit] or nil if unknown.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7655,7 +8464,7 @@ function PlayerClass:client_onReload() end
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7671,7 +8480,7 @@ function PlayerClass:server_onExplosion(center, destructionLevel) end
 ---**Note:**
 ---*If the attacker is destroyed before the projectile hits, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Player]'s [Character] was hit.
----@param attacker Player/Unit/nil The attacker. Can be a [Player], [Unit] or nil if unknown.
+---@param attacker Player|Unit|nil The attacker. Can be a [Player], [Unit] or nil if unknown.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7679,7 +8488,7 @@ function PlayerClass:server_onExplosion(center, destructionLevel) end
 function PlayerClass:server_onMelee(position, attacker, damage, power, direction, normal) end
 
 ---Called when the [Player]'s [Character] collides with another object.  
----@param other Shape/Character/Harvestable/Lift/nil The other object. Nil if terrain.
+---@param other Shape|Character|Harvestable|Lift|nil The other object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that that the [Player]'s [Character] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that that the other object had at the point of collision.
@@ -7924,7 +8733,7 @@ function ShapeClass:client_onAction(action, state) end
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Shape/Harvestable/nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
+---@param shooter Player|Shape|Harvestable|nil The shooter, can be a [Player], [Shape], [Harvestable] or nil if unknown. Projectiles shot by a [Unit] will be nil on the client.
 ---@param damage number The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7938,7 +8747,7 @@ function ShapeClass:client_onProjectile(position, airTime, velocity, projectileN
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -7952,7 +8761,7 @@ function ShapeClass:server_onSledgehammer() end
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Shape] was hit.
----@param attacker Player/nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
+---@param attacker Player|nil The attacker. Can be a [Player] or nil if unknown. Attacks made by a [Unit] will be nil on the client.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7963,7 +8772,7 @@ function ShapeClass:client_onMelee(position, attacker, damage, power, direction,
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Shape] was hit.
----@param attacker Player/Unit/nil The attacker. Can be a [Player], [Unit] or nil if unknown.
+---@param attacker Player|Unit|nil The attacker. Can be a [Player], [Unit] or nil if unknown.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -7977,7 +8786,7 @@ function ShapeClass:server_onMelee(position, attacker, damage, power, direction,
 function ShapeClass:server_onExplosion(center, destructionLevel) end
 
 ---Called when the [Shape] collides with another object.  
----@param other Shape/Character/Harvestable/Lift/nil The other object. Nil if terrain.
+---@param other Shape|Character|Harvestable|Lift|nil The other object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that that the [Shape] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that that the other object had at the point of collision.
@@ -7985,7 +8794,7 @@ function ShapeClass:server_onExplosion(center, destructionLevel) end
 function ShapeClass:client_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal) end
 
 ---Called when the [Shape] collides with another object.  
----@param other Shape/Character/Harvestable/Lift/nil The other object. Nil if terrain.
+---@param other Shape|Character|Harvestable|Lift|nil The other object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that that the [Shape] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that that the other object had at the point of collision.
@@ -8152,7 +8961,7 @@ function UnitClass:client_onClientDataUpdate(data, channel) end
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
@@ -8168,7 +8977,7 @@ function UnitClass:server_onExplosion(center, destructionLevel) end
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the [Unit]'s [Character] was hit.
----@param attacker Player/Unit/nil The attacker. Can be a [Player], [Unit] or nil if unknown.
+---@param attacker Player|Unit|nil The attacker. Can be a [Player], [Unit] or nil if unknown.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -8176,7 +8985,7 @@ function UnitClass:server_onExplosion(center, destructionLevel) end
 function UnitClass:server_onMelee(position, attacker, damage, power, direction, normal) end
 
 ---Called when the [Unit]'s [Character] collides with another object.  
----@param other Shape/Character/Harvestable/Lift/nil The other object. Nil if terrain.
+---@param other Shape|Character|Harvestable|Lift|nil The other object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param selfPointVelocity Vec3 The velocity that that the [Unit]'s [Character] had at the point of collision.
 ---@param otherPointVelocity Vec3 The velocity that that the other object had at the point of collision.
@@ -8366,11 +9175,11 @@ function WorldClass:server_onInteractableDestroyed(interactable) end
 ---@param airTime number The time, in seconds, that the projectile spent flying before the hit.
 ---@param velocity Vec3 The velocity of the projectile at impact.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param damage integer The damage value of the projectile.
 ---@param customData any A Lua object that can be defined at shoot time using [sm.projectile.customProjectileAttack] or an other custom version. 
 ---@param normal Vec3 The normal at the point of impact.
----@param target Character/Shape/Harvestable/Lift/nil The hit target. Can be a [Character], [Shape], [Harvestable], [Lift] or nil if terrain or unknown.
+---@param target Character|Shape|Harvestable|Lift|nil The hit target. Can be a [Character], [Shape], [Harvestable], [Lift] or nil if terrain or unknown.
 ---@param uuid Uuid The uuid of the projectile.
 function WorldClass:server_onProjectile(position, airTime, velocity, projectileName, shooter, damage, customData, normal, target, uuid) end
 
@@ -8383,8 +9192,8 @@ function WorldClass:server_onExplosion(center, destructionLevel) end
 ---**Note:**
 ---*If the attacker is destroyed before the hit lands, the attacker value will be nil.*
 ---@param position Vec3 The position in world space where the attack hit.
----@param attacker Player/Unit/nil The attacker. Can be a [Player], [Unit] or nil if unknown.
----@param target Character/Shape/Harvestable/Lift/nil The hit target. Can be a [Character], [Shape], [Harvestable], [Lift] or nil if terrain or unknown.
+---@param attacker Player|Unit|nil The attacker. Can be a [Player], [Unit] or nil if unknown.
+---@param target Character|Shape|Harvestable|Lift|nil The hit target. Can be a [Character], [Shape], [Harvestable], [Lift] or nil if terrain or unknown.
 ---@param damage integer The damage value of the melee hit.
 ---@param power number The physical impact impact of the hit.
 ---@param direction Vec3 The direction that the melee attack was made.
@@ -8395,13 +9204,13 @@ function WorldClass:server_onMelee(position, attacker, target, damage, power, di
 ---@param position Vec3 The position in world space where projectile was fired from.
 ---@param velocity Vec3 The fire velocity of the projectile.
 ---@param projectileName string The name of the projectile. (Legacy, use uuid instead)
----@param shooter Player/Unit/Shape/Harvestable/nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
+---@param shooter Player|Unit|Shape|Harvestable|nil The shooter. Can be a [Player], [Unit], [Shape], [Harvestable] or nil if unknown.
 ---@param uuid Uuid The uuid of the projectile.
 function WorldClass:server_onProjectileFire(position, velocity, projectileName, shooter, uuid) end
 
 ---Called when a collision occurs in this world.  
----@param objectA Shape/Character/Harvestable/Lift/nil The first colliding object. Nil if terrain.
----@param objectB Shape/Character/Harvestable/Lift/nil The other colliding object. Nil if terrain.
+---@param objectA Shape|Character|Harvestable|Lift|nil The first colliding object. Nil if terrain.
+---@param objectB Shape|Character|Harvestable|Lift|nil The other colliding object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param pointVelocityA Vec3 The velocity that that the first object had at the point of collision.
 ---@param pointVelocityB Vec3 The velocity that that the other object had at the point of collision.
@@ -8409,8 +9218,8 @@ function WorldClass:server_onProjectileFire(position, velocity, projectileName, 
 function WorldClass:server_onCollision(objectA, objectB, position, pointVelocityA, pointVelocityB, normal) end
 
 ---Called when a collision occurs in this world.  
----@param objectA Shape/Character/Harvestable/Lift/nil One of the colliding objects. Nil if terrain.
----@param objectB Shape/Character/Harvestable/Lift/nil The other colliding object. Nil if terrain.
+---@param objectA Shape|Character|Harvestable|Lift|nil One of the colliding objects. Nil if terrain.
+---@param objectB Shape|Character|Harvestable|Lift|nil The other colliding object. Nil if terrain.
 ---@param position Vec3 The position in world space where the collision occurred.
 ---@param pointVelocityA Vec3 The velocity that that the first object had at the point of collision.
 ---@param pointVelocityB Vec3 The velocity that that the other object had at the point of collision.
