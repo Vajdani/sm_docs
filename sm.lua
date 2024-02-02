@@ -4547,6 +4547,11 @@ function sm.shape.getIsHarvest(uuid) end
 ---@return boolean
 function sm.shape.getIsStackable(uuid) end
 
+---Returns a table of shapes that are inside the sphere.
+---@param center Vec3 The sphere center position.
+---@param radius number The sphere radius.
+function sm.shape.shapesInSphere(center, radius) end
+
 ---A <strong>body</strong> is a collection of [Shape, shapes] that are built together. Bodies can be connected to other bodies using [Joint, joints] such as the bearing.  
 sm.body = {}
 
