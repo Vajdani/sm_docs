@@ -1703,7 +1703,7 @@ function Container:setAllowSpend(allow) end
 
 ---*Server only*  
 ---Set item filter.  
----@param filter table A table of the item uuid's {[Uuid], ...} allowed to be stored in the container.
+---@param filter Uuid[] A table of the item uuid's {[Uuid], ...} allowed to be stored in the container.
 function Container:setFilters(filter) end
 
 ---*Server only*  
@@ -3516,7 +3516,7 @@ function Widget:setVisible() end
 
 
 ---@class BlueprintVisualization
----A userdata object representing a <strong>blueprint visualziation</strong>.  
+---A userdata object representing a <strong>blueprint visualization</strong>.  
 local BlueprintVisualization = {}
 
 ---*Client only*  
@@ -4696,21 +4696,7 @@ sm.projectile = {}
 ---@param damage integer The damage the projectile will inflict.
 ---@param position Vec3 The start position in world space.
 ---@param velocity Vec3 The direction and velocity.
----@param source Player The player that is the source of the projectile.
----@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
----@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
----@param delay? integer The number of ticks before firing. (Defaults to 0)
-function sm.projectile.customProjectileAttack(userdata, name, damage, position, velocity, source, fakePosThird, fakePosFirst, delay) end
-
----*Server only*  
----@deprecated Name is deprecated, use uuid instead
----Perform a customized projectile attack  
----@param userdata table The custom user data
----@param name string The projectile's name.
----@param damage integer The damage the projectile will inflict.
----@param position Vec3 The start position in world space.
----@param velocity Vec3 The direction and velocity.
----@param source Unit The Unit that is the source of the projectile.
+---@param source Player|Unit The player that is the source of the projectile.
 ---@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
 ---@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
 ---@param delay? integer The number of ticks before firing. (Defaults to 0)
@@ -4723,20 +4709,7 @@ function sm.projectile.customProjectileAttack(userdata, name, damage, position, 
 ---@param damage integer The damage the projectile will inflict.
 ---@param position Vec3 The start position in world space.
 ---@param velocity Vec3 The direction and velocity.
----@param source Player The player that is the source of the projectile.
----@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
----@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
----@param delay? integer The number of ticks before firing. (Defaults to 0)
-function sm.projectile.customProjectileAttack(userdata, uuid, damage, position, velocity, source, fakePosThird, fakePosFirst, delay) end
-
----*Server only*  
----Perform a customized projectile attack  
----@param userdata table The custom user data
----@param uuid Uuid The projectile's uuid.
----@param damage integer The damage the projectile will inflict.
----@param position Vec3 The start position in world space.
----@param velocity Vec3 The direction and velocity.
----@param source Unit The Unit that is the source of the projectile.
+---@param source Player|Unit The player that is the source of the projectile.
 ---@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
 ---@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
 ---@param delay? integer The number of ticks before firing. (Defaults to 0)
@@ -4824,19 +4797,7 @@ function sm.projectile.playerFire(uuid, position, velocity, fakePosThird, fakePo
 ---@param damage integer The damage the projectile will inflict.
 ---@param position Vec3 The start position.
 ---@param velocity Vec3 The direction and velocity.
----@param source Player The player that is the source of the projectile.
----@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
----@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
----@param delay? integer The number of ticks before firing. (Defaults to 0)
-function sm.projectile.projectileAttack(name, damage, position, velocity, source, fakePosThird, fakePosFirst, delay) end
-
----@deprecated Name is deprecated, use uuid instead
----Perform a projectile attack  
----@param name string The projectile's name.
----@param damage integer The damage the projectile will inflict.
----@param position Vec3 The start position.
----@param velocity Vec3 The direction and velocity.
----@param source Unit The Unit that is the source of the projectile.
+---@param source Player|Unit The Unit that is the source of the projectile.
 ---@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
 ---@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
 ---@param delay? integer The number of ticks before firing. (Defaults to 0)
@@ -4847,18 +4808,7 @@ function sm.projectile.projectileAttack(name, damage, position, velocity, source
 ---@param damage integer The damage the projectile will inflict.
 ---@param position Vec3 The start position.
 ---@param velocity Vec3 The direction and velocity.
----@param source Player The player that is the source of the projectile.
----@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
----@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
----@param delay? integer The number of ticks before firing. (Defaults to 0)
-function sm.projectile.projectileAttack(uuid, damage, position, velocity, source, fakePosThird, fakePosFirst, delay) end
-
----Perform a projectile attack  
----@param uuid Uuid The projectile's uuid.
----@param damage integer The damage the projectile will inflict.
----@param position Vec3 The start position.
----@param velocity Vec3 The direction and velocity.
----@param source Unit The Unit that is the source of the projectile.
+---@param source Player|Unit The player that is the source of the projectile.
 ---@param fakePosThird? Vec3 The visual start position in third-person. (Defaults to position)
 ---@param fakePosFirst? Vec3 The visual start position in first-person. (Defaults to position)
 ---@param delay? integer The number of ticks before firing. (Defaults to 0)
@@ -5144,7 +5094,7 @@ function sm.container.collect(container, itemUuid, quantity, mustCollectAll) end
 ---@param slot integer The container slot.
 ---@param itemUuid Uuid The uuid of the item to be added.
 ---@param quantity integer The number of items to be added.
----@param mustCollectAll boolean If true, only add items if there is enough room. If false, add as many items as possible. Defaults to true. (Optional)
+---@param mustCollectAll? boolean If true, only add items if there is enough room. If false, add as many items as possible. Defaults to true. (Optional)
 ---@return integer
 function sm.container.collectToSlot(container, slot, itemUuid, quantity, mustCollectAll) end
 
@@ -5188,7 +5138,7 @@ function sm.container.quantity(container) end
 ---@param itemUuid Uuid The uuid of the item.
 ---@param quantity integer The number of items.
 ---@param mustSpendAll? boolean If true, only remove items if there are enough. If false, remove as many items as possible. Defaults to true. (Optional)
----@return integer
+---@return integer spentAmount The amount of spent items
 function sm.container.spend(container, itemUuid, quantity, mustSpendAll) end
 
 ---*Server only*  
