@@ -245,7 +245,7 @@ function RaycastResult:getHarvestable() end
 function RaycastResult:getJoint() end
 
 ---Returns the [Lift] hit during the raycast. This is only possible if [RaycastResult.type] is equal to "lift", otherwise this will return nil.  
----@return Lift, boolean						The lift; True if the lift is top
+---@return Lift, boolean Lift, isTop; The lift; True if the lift is top
 function RaycastResult:getLiftData() end
 
 ---Returns the [Shape] hit during the raycast. This is only possible if [RaycastResult.type] is equal to "body", otherwise this will return nil.  
@@ -3945,7 +3945,7 @@ function sm.json.parseJsonString(json) end
 function sm.json.save(root, path) end
 
 ---Writes a json string from a lua table.  
----@param root string The lua table.
+---@param root table The lua table.
 ---@return string
 function sm.json.writeJsonString(root) end
 
@@ -4960,7 +4960,7 @@ function sm.creation.exportToTable(body, exportTransforms, forceDynamic) end
 ---@param worldRotation? Quat World rotation of import. If importTransforms is enabled rotation is applied to the imported transform. (Defaults to quat.identity().)
 ---@param importTransforms? boolean Import world transforms from bodies. (Defaults to false.)
 ---@param indestructible? boolean (DEPRECATED) Ignored, use setDestructable(false) on each body in creation.
----@return table
+---@return Body[]
 function sm.creation.importFromFile(world, pathString, worldPosition, worldRotation, importTransforms, indestructible) end
 
 ---*Server only*  
