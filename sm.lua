@@ -1,5 +1,44 @@
 ---@diagnostic disable
 
+---@alias type
+---| "nil"
+---| "number"
+---| "string"
+---| "boolean"
+---| "table"
+---| "function"
+---| "thread"
+---| "userdata"
+---| "Shape"
+---| "Body"
+---| "Character"
+---| "Joint"
+---| "Harvestable"
+---| "AreaTrigger"
+---| "Vec3"
+---| "Quat"
+---| "Container"
+---| "RaycastResult"
+---| "Interactable"
+---| "Network"
+---| "Player"
+---| "World"
+---| "GuiInterface"
+---| "Tool"
+---| "Portal"
+---| "BlueprintVisualization"
+---| "PathNode"
+---| "AiState"
+---| "Unit"
+---| "Storage"
+---| "Effect"
+---| "CullSphereGroup"
+---| "BuilderGuide"
+---| "Lift"
+---| "ScriptableObject"
+
+
+
 ---@class Vec3
 ---@operator mul(number): Vec3
 ---@operator mul(Quat): Vec3
