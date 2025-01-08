@@ -6742,7 +6742,7 @@ function sm.debugDraw.addArrow(name, from, to, color) end
 ---Adds a named sphere debug draw.  
 ---@param name string The debug sphere name.
 ---@param center Vec3 The sphere center.
----@param radius? Vec3 The sphere radius. Defaults to 0.125.
+---@param radius? number The sphere radius. Defaults to 0.125.
 ---@param color? Color The color. Defaults to white.
 function sm.debugDraw.addSphere(name, center, radius, color) end
 
