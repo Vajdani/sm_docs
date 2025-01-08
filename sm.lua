@@ -365,9 +365,14 @@ Shape.id = {}
 Shape.interactable = {}
 
 ---**Get**:
----Return true if a shape is a basicmaterial  
+---Return true if a shape is a block  
 ---@type boolean
 Shape.isBlock = {}
+
+---**Get**:
+---Return true if a shape is a wedge  
+---@type boolean
+Shape.isWedge = {}
 
 ---**Get**:
 ---Check if a shape is liftable  
@@ -809,6 +814,19 @@ function Body:createBlock(uuid, size, position, forceAccept) end
 ---@param forceAccept? boolean Set true to force the body to accept the shape. (Defaults to true)
 ---@return Shape shape
 function Body:createPart(uuid, position, z_axis, x_axis, forceAccept) end
+
+---*Server only*  
+---Creates a wedge attached to a body. The wedge is oriented with one   
+---cathetus along the Y-axis and the other along the Z-axis, forming a right angle. The wedge's   
+---rotation is controlled by z-axis and x-axis parameters, similar to standard part rotation.  
+---@param uuid Uuid The uuid of the shape.
+---@param size Vec3 The shape's size.
+---@param position Vec3 The shape's local position.
+---@param z_axis Vec3 The shape's local z direction.
+---@param x_axis Vec3 The shape's local x direction.
+---@param forceAccept? boolean Set true to force the body to accept the shape. (Defaults to true)
+---@return Shape wedge The created wedge
+function Body:createWedge(uuid, size, position, z_axis, x_axis, forceAccept) end
 
 ---*Server only*  
 ---Returns a table with all characters seated in this body  
@@ -4556,6 +4574,18 @@ function sm.shape.createBlock(uuid, size, position, rotation, dynamic, forceSpaw
 ---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
 ---@return Shape part The created part
 function sm.shape.createPart(uuid, position, rotation, dynamic, forceSpawn) end
+
+---*Server only*  
+---Creates a wedge. The wedge is oriented with one   
+---cathetus along the Y-axis and the other along the Z-axis, forming a right angle.   
+---@param uuid Uuid The uuid of the shape.
+---@param size Vec3 The size of the wedge.
+---@param position Vec3 The shape's world position.
+---@param rotation? Quat The shape's world rotation. Defaults to no rotation (Optional)
+---@param dynamic? boolean Set true if the shape is dynamic or false if the shape is static. Defaults to true (Optional)
+---@param forceSpawn? boolean Set true to force spawn the shape even if it will cause collision. Defaults to true (Optional)
+---@return Shape wedge The created wedge
+function sm.shape.createWedge(uuid, size, position, rotation, dynamic, forceSpawn) end
 
 ---Returns the block/part description for the given uuid.  
 ---@param uuid Uuid The uuid.
