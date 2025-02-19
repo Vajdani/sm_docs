@@ -301,7 +301,7 @@ function RaycastResult:getHarvestable() end
 function RaycastResult:getJoint() end
 
 ---Returns the [Lift] hit during the raycast. This is only possible if [RaycastResult.type] is equal to "lift", otherwise this will return nil.  
----@return Lift, boolean Lift, isTop; The lift; True if the lift is top
+---@return Lift, boolean isTop; The lift; True if the lift is top
 function RaycastResult:getLiftData() end
 
 ---Returns the [Shape] hit during the raycast. This is only possible if [RaycastResult.type] is equal to "body", otherwise this will return nil.  
@@ -576,6 +576,14 @@ function Shape:getInterpolatedUp() end
 ---Returns the interpolated world position of a shape.  
 ---@return Vec3
 function Shape:getInterpolatedWorldPosition() end
+
+---Return whether the shape uuid belongs to a harvest shape  
+---@return boolean
+function Shape:getIsHarvest() end
+
+---Return whether the shape uuid belongs to a stackable shape  
+---@return boolean
+function Shape:getIsStackable() end
 
 ---Returns a table of all [Joint, joints] that are attached to the shape.  
 ---Will return all attached joints when onlyChildJoints is set to false.  
@@ -1421,7 +1429,10 @@ Joint.angularVelocity = {}
 Joint.appliedImpulse = {}
 
 ---**Get**:
----Returns the color of a joint.  
+---Returns the color of a joint.
+---**Set**:
+---*Server only*  
+---Sets the color of a joint.   
 ---@type Color
 Joint.color = {}
 
@@ -1589,6 +1600,11 @@ function Joint:getZAxis() end
 ---Returns whether a bearing has been reversed using the <em>Connect Tool</em>. A reversed bearing rotates counterclockwise.  
 ---@return boolean
 function Joint:isReversed() end
+
+---*Server only*  
+---Sets the color of a joint.  
+---@param color Color The new color.
+function Joint:setColor(color) end
 
 ---Sets the motor velocity for a bearing. The bearing will try to maintain the target velocity with the given amount of impulse/strength.  
 ---In Scrap Mechanic, the Gas Engine increases both velocity and impulse with every gear. The Electric Engine increases velocity, but maintains the same impulse for every gear, making it sturdier.  
@@ -1962,6 +1978,10 @@ function Character:getPublicData() end
 ---Returns the radius of a character  
 ---@return number
 function Character:getRadius() end
+
+---Returns the smooth direction of where a character is viewing or aiming.  
+---@return Vec3
+function Character:getSmoothViewDirection() end
 
 ---Returns the normal of the character's contact with a surface. Defaults to a zero vector when no contact is found.  
 ---@return Vec3
@@ -3041,6 +3061,12 @@ function Effect:setRotation(rotation) end
 function Effect:setScale(scale) end
 
 ---*Client only*  
+---Sets an effect to stop and restart depending on distance to the player.  
+---@param startDistance number The distance when effect will start
+---@param stopDistance number The distance when effect will stop
+function Effect:setStartStopDistance(startDistance, stopDistance) end
+
+---*Client only*
 ---Sets an effect to be active during specific period of the day / night cycle.  
 ---@param enabled boolean Time of day enabled.
 ---@param startTime number Start normalized time of day.
@@ -3688,7 +3714,8 @@ function GuiInterface:createGridFromJson(gridName, index) end
 ---@param value number The start value on the slider
 ---@param functionName string Slider change callback function name
 ---@param numbered? boolean Enable numbered steps (Defaults to false)
-function GuiInterface:createHorizontalSlider(widgetName, range, value, functionName, numbered) end
+---@param inverted? boolean Invert slider direction
+function GuiInterface:createHorizontalSlider(widgetName, range, value, functionName, numbered, inverted) end
 
 ---*Client only*  
 ---Creates a slider at the specified widget  
@@ -3715,7 +3742,7 @@ function GuiInterface:open() end
 ---Plays an effect at a widget  
 ---@param widgetName string The name of the widget
 ---@param effectName string The name of the effect
----@param restart? boolean If the effect should restart if its already palying
+---@param restart? boolean If the effect should restart if its already playing
 function GuiInterface:playEffect(widgetName, effectName, restart) end
 
 ---*Client only*  
@@ -3723,7 +3750,7 @@ function GuiInterface:playEffect(widgetName, effectName, restart) end
 ---@param gridName string The name of the grid
 ---@param index integer The index in the grid
 ---@param effectName string The name of the effect
----@param restart? boolean If the effect should restart if its already palying
+---@param restart? boolean If the effect should restart if its already playing
 function GuiInterface:playGridEffect(gridName, index, effectName, restart) end
 
 ---*Client only*  
@@ -3808,6 +3835,13 @@ function GuiInterface:setGridSize(gridName, index) end
 ---@param object Character|Shape The object to host the gui
 ---@param joint? string The joint (Optional)
 function GuiInterface:setHost(object, joint) end
+
+---*Client only*  
+---Sets a [Shape] as host for a world gui  
+---@param widgetName string The name of the widget
+---@param shape Shape The shape to host the gui
+---@param joint? string The joint (Optional)
+function GuiInterface:setHost(widgetName, shape, joint) end
 
 ---*Client only*  
 ---Sets the icon image to a shape from an uuid  
@@ -9115,6 +9149,11 @@ WorldClass.groundMaterialSet = {}
 ---Indoor worlds have only one terrain cell in (0, 0)  
 ---@type boolean
 WorldClass.isIndoor = {}
+
+---Enables or disables static mode. (Defaults to false)  
+---Static worlds are created at load time and doesn't stream in and out.  
+---@type boolean
+WorldClass.isStatic = {}
 
 ---Sets the render mode for this world. (Default "outdoor")  
 ---Possible values: "outdoor", "challenge", "warehouse"  
