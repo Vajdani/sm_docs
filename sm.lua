@@ -212,6 +212,23 @@ Color.r = {}
 function Color:getHexStr() end
 
 
+
+---@alias RaycastResultTypes
+---| "limiter"
+---| "terrainSurface"
+---| "terrainAsset"
+---| "body"
+---| "joint"
+---| "lift"
+---| "character"
+---| "joint"
+---| "harvestable"
+---| "ragdoll"
+---| "areaTrigger"
+---| "vision"
+---| "voxelTerrain"
+---| "tunnelCatcher"
+
 ---@class RaycastResult
 ---A userdata object representing a <strong>raycast result</strong>.  
 ---A <strong>raycast result</strong> is a collection of data received from a raycast. The result contains information about where the raycast travelled and what objects it eventually hit.  
@@ -255,7 +272,7 @@ RaycastResult.pointWorld = {}
 
 ---**Get**:
 ---Returns the physics type of the target that was hit. (See [sm.physics.types])  
----@type string
+---@type RaycastResultTypes
 RaycastResult.type = {}
 
 ---**Get**:
@@ -487,7 +504,7 @@ Shape.zAxis = {}
 ---@param uuid Uuid The uuid of the joint.
 ---@param position Vec3 The joint's grid position.
 ---@param direction Vec3 The joint's normal direction.
----@return Joint					The created joint.
+---@return Joint joint The created joint.
 function Shape:createJoint(uuid, position, direction) end
 
 ---*Server only*  
@@ -1323,7 +1340,7 @@ function Interactable:setPublicData(data) end
 function Interactable:setSeatCharacter(character) end
 
 ---Set the steering flag for a steering interactable.  
----@param steering integer flags	The steering flags.
+---@param steering flags The steering flags.
 function Interactable:setSteeringFlag(steering) end
 
 ---*Client only*  
@@ -1378,7 +1395,7 @@ function Interactable:setSubMeshVisible(name, visible) end
 function Interactable:setUvFrameIndex(index) end
 
 ---Unset the steering flag for a steering interactable.  
----@param steering integer flags	The steering flags.
+---@param steering flags The steering flags.
 function Interactable:unsetSteeringFlag(steering) end
 
 
@@ -5029,7 +5046,7 @@ function sm.creation.exportToTable(body, exportTransforms, forceDynamic) end
 ---Imports blueprint json file to world.  
 ---**Warning:**
 ---*If the blueprint was not exported with transforms the importer will treat it as if importTransforms was disabled.*
----@param world World The world to import to.
+---@param world? World The world to import to.
 ---@param pathString string The blueprint path.
 ---@param worldPosition? Vec3 World position of import. If importTransforms is enabled position is applied to the imported transform. (Defaults to vec3.zero().)
 ---@param worldRotation? Quat World rotation of import. If importTransforms is enabled rotation is applied to the imported transform. (Defaults to quat.identity().)
